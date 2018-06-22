@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Money", "Money\Money.csproj", "{182340AC-2FDA-45A5-ABD9-BBDCD883B550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyUI", "MoneyUI\MoneyUI.csproj", "{0EC5D955-8799-43AF-9FA8-E105E81C043D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{182340AC-2FDA-45A5-ABD9-BBDCD883B550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{182340AC-2FDA-45A5-ABD9-BBDCD883B550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{182340AC-2FDA-45A5-ABD9-BBDCD883B550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{182340AC-2FDA-45A5-ABD9-BBDCD883B550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EC5D955-8799-43AF-9FA8-E105E81C043D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC5D955-8799-43AF-9FA8-E105E81C043D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC5D955-8799-43AF-9FA8-E105E81C043D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC5D955-8799-43AF-9FA8-E105E81C043D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43711462-4CA4-4996-8558-DD77E13BD517}
+	EndGlobalSection
+EndGlobal
