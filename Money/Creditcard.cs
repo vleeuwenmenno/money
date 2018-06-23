@@ -15,7 +15,8 @@ namespace Money
         Discover = 4,
         DinersClub = 5,
         JCB = 6,
-        enRoute = 7
+        enRoute = 7,
+        Savings,
     }
 
     // Class to hold credit card type information

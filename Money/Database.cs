@@ -12,12 +12,27 @@ namespace Money
 
         public List<Account> accounts { get; set; }
 
+        public List<string> payees { get; set; }
+
         public bool syncWebDav { get; set; }
         public bool darkTheme { get; set; }
 
         public string webDavHost { get; set; }
         public string webDavUsername { get; set; }
         public string webDavPass {get;set;}
+
+        public int AccountIdFromName(string name)
+        {
+            int i = 0;
+            foreach (Account s in accounts)
+            {
+                if (s.accountName == name)
+                    return i;
+
+                i++;
+            }
+            throw new KeyNotFoundException("Couldn't find any account with this name.");
+        }
 
         public Database()
         {
@@ -39,11 +54,15 @@ namespace Money
             this.webDavPass = db.webDavPass;
 
             this.darkTheme = db.darkTheme;
+            this.payees = db.payees;
+
+            foreach (Account ac in this.accounts)
+                ac.RecalculateBalance();
         }
 
         public void Save(string path)
         {
-            string json = JsonConvert.SerializeObject(this);
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(path, json);
         }
     }

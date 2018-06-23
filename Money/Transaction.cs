@@ -8,15 +8,16 @@ namespace Money
 {
     public class Transaction
     {
+        public decimal amount { get; set; }
+
         public string desc { get; set; }
+
+        public string payee { get; set; } // to
 
         public DateTime dateTime { get; set; }
 
-        public decimal amount { get; set; }
-
-        public Recipient payee { get; set; } // to
-        public Recipient account { get; set; } // from
-
         public TransactionStatus status { get; set; }
+
+        public TransactionType type { get; set; }
     }
 }

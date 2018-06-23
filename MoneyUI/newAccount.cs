@@ -60,10 +60,10 @@ namespace MoneyUI
             accountNameTxt.Text = db.accounts[account].accountName;
             accountNumberTxt.Text = db.accounts[account].accountNumber;
 
-            initialBalance.Value = db.accounts[account].balance;
+            initialBalance.Value = db.accounts[account].initialBalance;
             initialBalance.Enabled = false;
 
-            accountTypeCombo.Text = db.accounts[account].cardType;
+            accountTypeCombo.Text = db.accounts[account].type;
             currencyTxt.Text = db.accounts[account].currencyChar.ToString();
 
             // Create a material theme manager and add the form to manage (this)
@@ -81,6 +81,9 @@ namespace MoneyUI
                 Primary.BlueGrey600, Accent.LightBlue700,
                 TextShade.WHITE
             );
+
+            ComboBoxItem item = new ComboBoxItem(db.accounts[ac].type, Image.FromFile(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/icons/" + db.accounts[ac].type.ToLower() + ".png"));
+            accountTypeCombo.SelectedIndex = accountTypeCombo.Items.Add(item);
         }
 
         private void newAccount_Load(object sender, EventArgs e)
@@ -114,10 +117,10 @@ namespace MoneyUI
             if (this.Text != "Add account")
             {
                 db.accounts[ac].accountName = accountNameTxt.Text;
-                db.accounts[ac].accountNumber = accountNumberTxt.Text.Replace("-", "").Replace(" ", "");
-                db.accounts[ac].balance = initialBalance.Value;
+                db.accounts[ac].accountNumber = accountNumberTxt.Text;
+                db.accounts[ac].initialBalance = initialBalance.Value;
                 db.accounts[ac].currencyChar = char.Parse(currencyTxt.Text.Substring(0, 1));
-                db.accounts[ac].cardType = accountTypeCombo.Text.ToLower();
+                db.accounts[ac].type = accountTypeCombo.Text.ToLower();
 
                 db.Save(dbPath);
                 this.Close();
@@ -127,10 +130,10 @@ namespace MoneyUI
                 Account ac = new Account();
 
                 ac.accountName = accountNameTxt.Text;
-                ac.accountNumber = accountNumberTxt.Text.Replace("-", "").Replace(" ", "");
-                ac.balance = initialBalance.Value;
+                ac.accountNumber = accountNumberTxt.Text;
+                ac.initialBalance = initialBalance.Value;
                 ac.currencyChar = char.Parse(currencyTxt.Text.Substring(0, 1));
-                ac.cardType = accountTypeCombo.Text.ToLower();
+                ac.type = accountTypeCombo.Text.ToLower();
 
                 db.accounts.Add(ac);
                 db.Save(dbPath);

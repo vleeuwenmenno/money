@@ -55,10 +55,10 @@
     <Compile Include="Creditcard.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recipient.cs" />
     <Compile Include="Tools.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionStatus.cs" />
+    <Compile Include="TransactionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

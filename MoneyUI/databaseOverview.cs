@@ -20,6 +20,10 @@ namespace MoneyUI
         public Database db;
         public string dbPath;
 
+        public DateTime monthToDisplay = DateTime.Now;
+
+        public accountOverview ao;
+
         public databaseOverview(Database db, string dbPath)
         {
             InitializeComponent();
@@ -27,12 +31,24 @@ namespace MoneyUI
             this.db = db;
             this.dbPath = dbPath;
 
-            PopulateUI();
+            ao = new accountOverview(db, 0, dbPath, this);
+
+            UpdateGUI();
         }
 
-        private void PopulateUI()
+        private void databaseOverview_LocationChanged(object sender, EventArgs e)
+        {
+            ao.Location = new Point(this.Location.X + 300, this.Location.Y);
+        }
+
+        private void UpdateGUI()
         {
             accountListView.Items.Clear();
+
+            if (monthToDisplay.Year == DateTime.Now.Year)
+                monthLabel.Text = monthToDisplay.ToString("MMMM");
+            else
+                monthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
 
             ImageList imgs = new ImageList();
             imgs.ImageSize = new Size(48, 64);
@@ -74,18 +90,21 @@ namespace MoneyUI
 
             foreach (Account ac in db.accounts)
             {
-                ListViewItem item = new ListViewItem(ac.accountName, ac.cardType);
+                ListViewItem item = new ListViewItem(ac.accountName, ac.type);
+                string s = ac.accountName + Environment.NewLine;
 
                 if (Tools.GetCardType(ac.accountNumber.Trim().Replace("-", "")) != CardType.Unknown)
                 {
-                    item.SubItems.Add(Creditcard.MaskDigits(ac.accountNumber));
+                    s += (Creditcard.MaskDigits(ac.accountNumber));
                 }
                 else if (Tools.ValidateIBAN(ac.accountNumber))
-                    item.SubItems.Add(Regex.Replace(ac.accountNumber, ".{4}", "$0 ").Trim());
+                    s += (Regex.Replace(ac.accountNumber, ".{4}", "$0 ").Trim());
                 else
-                    item.SubItems.Add(ac.accountNumber);
+                    s += (ac.accountNumber);
 
-                item.SubItems.Add(ac.currencyChar + " " + String.Format("{0:n}", ac.balance));
+                item.Text = s;
+
+                item.SubItems.Add(ac.currencyChar + " " + String.Format("{0:n}", ac.currentBalance));
                 item.Tag = ac;
 
                 accountListView.Items.Add(item);
@@ -102,7 +121,7 @@ namespace MoneyUI
             databaseSettings dbs = new databaseSettings(db, dbPath);
             dbs.ShowDialog();
 
-            PopulateUI();
+            UpdateGUI();
         }
 
         private void addAccountBtn_Click(object sender, EventArgs e)
@@ -110,14 +129,10 @@ namespace MoneyUI
             newAccount dbs = new newAccount(db, dbPath);
             dbs.ShowDialog();
 
-            PopulateUI();
-        }
+            foreach (Account ac in db.accounts)
+                ac.RecalculateBalance();
 
-        private void accountListView_DoubleClick(object sender, EventArgs e)
-        {
-            accountOverview aov = new accountOverview(db, db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag), dbPath);
-
-            aov.Show();
+            UpdateGUI();
         }
 
         private void accountListView_MouseClick(object sender, MouseEventArgs e)
@@ -126,21 +141,71 @@ namespace MoneyUI
             {
                 if (accountListView.FocusedItem.Bounds.Contains(e.Location) == true)
                 {
-                    contextMenuStrip1.Show(Cursor.Position);
+                    if (accountListView.SelectedItems.Count > 0)
+                        contextMenuStrip1.Show(Cursor.Position);
                 }
             }
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newAccount nac = new newAccount(db, db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag), dbPath);
-            nac.ShowDialog();
-            PopulateUI();
+            if (accountListView.SelectedItems.Count > 0)
+            {
+                newAccount nac = new newAccount(db, db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag), dbPath);
+                nac.ShowDialog();
+
+                foreach (Account ac in db.accounts)
+                    ac.RecalculateBalance();
+
+                UpdateGUI();
+            }
         }
 
         private void databaseOverview_Load(object sender, EventArgs e)
         {
+            //Set current month label
+            monthLabel.Text = monthToDisplay.ToString("MMMM");
 
+            ao.Show();
+            ao.Location = new Point(this.Location.X + 300, this.Location.Y);
+        }
+
+        private void databaseOverview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ao.Close();
+        }
+
+        private void uiChecker_Tick(object sender, EventArgs e)
+        {
+            if (ao.shouldUpdate)
+            {
+                UpdateGUI();
+                ao.shouldUpdate = false;
+            }
+        }
+
+        private void accountListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (accountListView.SelectedItems.Count > 0)
+                ao.ac = db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag);
+        }
+
+        private void monthLabel_Click(object sender, EventArgs e)
+        {
+            monthToDisplay = DateTime.Now;
+            UpdateGUI();
+        }
+
+        private void monthBackBtn_Click(object sender, EventArgs e)
+        {
+            monthToDisplay = monthToDisplay.AddMonths(-1);
+            UpdateGUI();
+        }
+
+        private void monthForwardBtn_Click(object sender, EventArgs e)
+        {
+            monthToDisplay = monthToDisplay.AddMonths(1);
+            UpdateGUI();
         }
     }
 }
