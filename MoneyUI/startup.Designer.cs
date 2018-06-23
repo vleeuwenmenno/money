@@ -37,6 +37,8 @@
             this.dbName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rightMouseMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightMouseMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // loadDbBtn
@@ -136,8 +138,17 @@
             // 
             // rightMouseMenu
             // 
+            this.rightMouseMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeToolStripMenuItem});
             this.rightMouseMenu.Name = "rightMouseMenu";
-            this.rightMouseMenu.Size = new System.Drawing.Size(181, 26);
+            this.rightMouseMenu.Size = new System.Drawing.Size(181, 48);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // startup
             // 
@@ -153,6 +164,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Money";
             this.Load += new System.EventHandler(this.startup_Load);
+            this.rightMouseMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,6 +179,7 @@
         private System.Windows.Forms.ColumnHeader filePath;
         private MaterialSkin.Controls.MaterialRaisedButton loadDbBtn;
         private System.Windows.Forms.ContextMenuStrip rightMouseMenu;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     }
 }
 

@@ -10,6 +10,10 @@ namespace Money
     {
         public decimal amount { get; set; }
 
+        public Guid id { get; set; }
+
+        public Guid intern { get; set; }
+
         public string desc { get; set; }
 
         public string payee { get; set; } // to

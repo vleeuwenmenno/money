@@ -29,7 +29,7 @@ namespace MoneyUI
             // Create a material theme manager and add the form to manage (this)
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
 
             // Configure color schema
             materialSkinManager.ColorScheme = new ColorScheme(
@@ -211,6 +211,36 @@ namespace MoneyUI
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dbPath = recentsList.SelectedItems[0].SubItems[1].Text;
+
+            DialogResult result = MessageBox.Show("Remove this database from history?", "Remove from history?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                history.Remove(new KeyValuePair<string, string>(recentsList.SelectedItems[0].SubItems[0].Text, recentsList.SelectedItems[0].SubItems[1].Text));
+                File.WriteAllText(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json", JsonConvert.SerializeObject(history, Formatting.Indented));
+            }
+
+            recentsList.Items.Clear();
+
+            history = new List<KeyValuePair<string, string>>();
+
+            if (File.Exists(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"))
+            {
+                history = JsonConvert.DeserializeObject<List<KeyValuePair<string, string>>>(File.ReadAllText(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"));
+
+                foreach (KeyValuePair<string, string> pair in history)
+                {
+                    ListViewItem item = new ListViewItem(pair.Key);
+                    item.SubItems.Add(pair.Value);
+
+                    recentsList.Items.Add(item);
+                }
+            }
         }
     }
 }

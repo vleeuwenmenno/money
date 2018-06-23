@@ -75,6 +75,8 @@ namespace MoneyUI
         {
             Transaction t = new Transaction();
 
+            t.id = Guid.NewGuid();
+
             if (db.accounts[db.AccountIdFromName(transactionAccountE.Text)].transactions == null)
                 db.accounts[db.AccountIdFromName(transactionAccountE.Text)].transactions = new List<Transaction>();
 
@@ -100,17 +102,35 @@ namespace MoneyUI
                 string payee = t.payee.Replace("[Internal]", "");
 
                 Transaction flip = new Transaction();
-                
+
+                flip.id = Guid.NewGuid();
                 flip.amount = t.amount * -1;
                 flip.desc = t.desc;
                 flip.payee = t.payee;
                 flip.dateTime = t.dateTime;
                 flip.type = t.type;
 
+                t.intern = flip.id;
+                flip.intern = t.id;
+
                 if (db.accounts[db.AccountIdFromName(payee)].transactions == null)
                     db.accounts[db.AccountIdFromName(payee)].transactions = new List<Transaction>();
 
                 db.accounts[db.AccountIdFromName(payee)].transactions.Add(flip);
+            }
+
+            t.status = TransactionStatus.Scheduled;
+
+            if (t.dateTime.Date == DateTime.Now.Date)
+            {
+                DialogResult res = MessageBox.Show("It seems like the transaction date is today, do you want to execute this transaction right away?\nClicking no will set the status to: OnHold", "Execute transaction now?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+
+                if (res == DialogResult.Yes)
+                    t.status = TransactionStatus.Completed;
+                else if (res == DialogResult.No)
+                    t.status = TransactionStatus.OnHold;
+                else
+                    return;
             }
 
             db.accounts[db.AccountIdFromName(transactionAccountI.Text)].transactions.Add(t);

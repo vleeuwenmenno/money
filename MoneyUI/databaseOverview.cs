@@ -5,13 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Money;
+using Newtonsoft.Json;
+using WebDav;
 
 namespace MoneyUI
 {
@@ -166,6 +170,12 @@ namespace MoneyUI
             //Set current month label
             monthLabel.Text = monthToDisplay.ToString("MMMM");
 
+            //Check if syncing is enabled if so show the button
+            if (db.syncWebDav)
+            {
+                syncBtn.Visible = true;
+            }
+
             ao.Show();
             ao.Location = new Point(this.Location.X + 300, this.Location.Y);
         }
@@ -206,6 +216,174 @@ namespace MoneyUI
         {
             monthToDisplay = monthToDisplay.AddMonths(1);
             UpdateGUI();
+        }
+
+        private void syncBtn_Click(object sender, EventArgs e)
+        {
+            syncBtn.Text = "...";
+            syncBtn.Enabled = false;
+            progressBar.Visible = true;
+
+            runSync();
+        }
+
+        public void runSync()
+        {
+            IWebDavClient _client = new WebDavClient();
+            var clientParams = new WebDavClientParams
+            {
+                BaseAddress = new Uri(db.webDavHost),
+                Credentials = new NetworkCredential(db.webDavUsername, db.webDavPass)
+            };
+            _client = new WebDavClient(clientParams);
+
+            Thread t = new Thread(async () => {
+                var result = await _client.Propfind(db.webDavHost + "/Money");
+                if (result.IsSuccessful)
+                {
+                    bool containsDb = false;
+                    foreach (var res in result.Resources)
+                    {
+                        if (res.Uri.EndsWith("database.mdb")) //Check if we have the database online
+                        {
+                            containsDb = true;
+                            break;
+                        }
+                    }
+
+                    if (containsDb)
+                    {
+                        //Let's grab the online version
+                        var resultInner = await _client.GetRawFile(db.webDavHost + "/Money/database.mdb");
+
+                        StreamReader reader = new StreamReader(resultInner.Stream);
+                        string json = reader.ReadToEnd();
+                        Database oDb = JsonConvert.DeserializeObject<Database>(json);
+
+                        //Check if modDateTime is newer than current database
+                        //if so replace local with online
+                        if (oDb.modDateTime > db.modDateTime)
+                        {
+                            File.WriteAllText(dbPath, json);
+
+                            db = null;
+                            oDb = null;
+
+                            db = new Database(dbPath);
+
+                            Invoke((MethodInvoker)delegate {
+                                //Reload the account overview window
+                                ao.Close();
+                                ao = new accountOverview(db, 0, dbPath, this);
+                                ao.Show();
+
+                                UpdateGUI();
+
+                                progressBar.Visible = false;
+                                this.Enabled = true;
+                                syncBtn.Text = "Sync";
+                                syncBtn.Enabled = true;
+                                this.Focus();
+                            });
+                        }
+                        else
+                        //Else upload local to online
+                        {
+                            //First delete the online version
+                            var resultInnerInner = await _client.Delete(db.webDavHost + "/Money/database.mdb");
+
+                            if(resultInnerInner.IsSuccessful)
+                            {
+                                var resultInnerInnerInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
+                                
+                                if (!resultInnerInnerInner.IsSuccessful)
+                                {
+                                    MessageBox.Show("Failed to upload database. Sync error " + resultInnerInner.StatusCode + " (" + resultInnerInner.Description + ")", resultInnerInner.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                                else
+                                {
+                                    Invoke((MethodInvoker)delegate {
+                                        UpdateGUI();
+
+                                        progressBar.Visible = false;
+                                        this.Enabled = true;
+                                        syncBtn.Text = "Sync";
+                                        syncBtn.Enabled = true;
+                                        this.Focus();
+                                    });
+                                }
+
+                            }
+                            else
+                                MessageBox.Show("Failed to delete out-of-sync online database. Sync error " + resultInnerInner.StatusCode + " (" + resultInnerInner.Description + ")", resultInnerInner.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+
+                        db.Save(dbPath);
+                        Invoke((MethodInvoker)delegate {
+                            progressBar.Visible = false;
+                            this.Enabled = true;
+                            syncBtn.Text = "Sync";
+                            syncBtn.Enabled = true;
+                            this.Focus();
+                        });
+                    }
+                    else
+                    {
+                        var resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
+
+                        if (!resultInner.IsSuccessful)
+                            MessageBox.Show("Error " + resultInner.StatusCode + " (" + resultInner.Description + ")", resultInner.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        else
+                        {
+                            db.Save(dbPath);
+                            Invoke((MethodInvoker)delegate {
+                                progressBar.Visible = false;
+                                this.Enabled = true;
+                                syncBtn.Text = "Sync";
+                                syncBtn.Enabled = true;
+                                this.Focus();
+                            });
+                        }
+                    }
+                }
+                else if (result.StatusCode == 404)
+                {
+                    var resultInner = await _client.Mkcol("Money");
+
+                    if (resultInner.IsSuccessful)
+                    {
+                        resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
+
+                        if (!resultInner.IsSuccessful)
+                            MessageBox.Show("Error " + resultInner.StatusCode + " (" + resultInner.Description + ")", result.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        else
+                        {
+                            db.Save(dbPath);
+                            Invoke((MethodInvoker)delegate {
+                                progressBar.Visible = false;
+                                this.Enabled = true;
+                                syncBtn.Text = "Sync";
+                                syncBtn.Enabled = true;
+                                this.Focus();
+                            });
+                        }
+                    }
+                    else
+                        MessageBox.Show("Error " + resultInner.StatusCode + " (" + resultInner.Description + ")", result.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                    MessageBox.Show("Error " + result.StatusCode + " (" + result.Description + ")", result.Description, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                Invoke((MethodInvoker)delegate {
+                    progressBar.Visible = false;
+                    this.Enabled = true;
+                    syncBtn.Text = "Sync";
+                    syncBtn.Enabled = true;
+                    this.Focus();
+                });
+            });
+
+            t.Start();
         }
     }
 }

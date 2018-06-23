@@ -41,6 +41,7 @@
             this.dbNameTxtSett = new MaterialSkin.Controls.MaterialLabel();
             this.dbNameTxtBox = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.saveBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.webDavSettingsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Primary = false;
             this.cancelBtn.Size = new System.Drawing.Size(73, 36);
-            this.cancelBtn.TabIndex = 12;
+            this.cancelBtn.TabIndex = 7;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
@@ -73,7 +74,7 @@
             this.webDavSettingsPanel.Enabled = false;
             this.webDavSettingsPanel.Location = new System.Drawing.Point(42, 217);
             this.webDavSettingsPanel.Name = "webDavSettingsPanel";
-            this.webDavSettingsPanel.Size = new System.Drawing.Size(235, 183);
+            this.webDavSettingsPanel.Size = new System.Drawing.Size(342, 183);
             this.webDavSettingsPanel.TabIndex = 11;
             // 
             // materialLabel2
@@ -114,8 +115,8 @@
             this.linkTxt.SelectedText = "";
             this.linkTxt.SelectionLength = 0;
             this.linkTxt.SelectionStart = 0;
-            this.linkTxt.Size = new System.Drawing.Size(200, 23);
-            this.linkTxt.TabIndex = 9;
+            this.linkTxt.Size = new System.Drawing.Size(332, 23);
+            this.linkTxt.TabIndex = 3;
             this.linkTxt.TabStop = false;
             this.linkTxt.UseSystemPasswordChar = false;
             // 
@@ -131,8 +132,8 @@
             this.passwordTxt.SelectedText = "";
             this.passwordTxt.SelectionLength = 0;
             this.passwordTxt.SelectionStart = 0;
-            this.passwordTxt.Size = new System.Drawing.Size(200, 23);
-            this.passwordTxt.TabIndex = 9;
+            this.passwordTxt.Size = new System.Drawing.Size(255, 23);
+            this.passwordTxt.TabIndex = 5;
             this.passwordTxt.TabStop = false;
             this.passwordTxt.UseSystemPasswordChar = false;
             // 
@@ -148,8 +149,8 @@
             this.usernameTxt.SelectedText = "";
             this.usernameTxt.SelectionLength = 0;
             this.usernameTxt.SelectionStart = 0;
-            this.usernameTxt.Size = new System.Drawing.Size(200, 23);
-            this.usernameTxt.TabIndex = 9;
+            this.usernameTxt.Size = new System.Drawing.Size(255, 23);
+            this.usernameTxt.TabIndex = 4;
             this.usernameTxt.TabStop = false;
             this.usernameTxt.UseSystemPasswordChar = false;
             // 
@@ -178,7 +179,7 @@
             this.darkThemeChk.Name = "darkThemeChk";
             this.darkThemeChk.Ripple = true;
             this.darkThemeChk.Size = new System.Drawing.Size(101, 30);
-            this.darkThemeChk.TabIndex = 8;
+            this.darkThemeChk.TabIndex = 1;
             this.darkThemeChk.Text = "Dark theme";
             this.darkThemeChk.UseVisualStyleBackColor = true;
             this.darkThemeChk.CheckedChanged += new System.EventHandler(this.syncWebDav_CheckedChanged);
@@ -195,7 +196,7 @@
             this.syncWebDav.Name = "syncWebDav";
             this.syncWebDav.Ripple = true;
             this.syncWebDav.Size = new System.Drawing.Size(143, 30);
-            this.syncWebDav.TabIndex = 8;
+            this.syncWebDav.TabIndex = 2;
             this.syncWebDav.Text = "Sync with WebDav";
             this.syncWebDav.UseVisualStyleBackColor = true;
             this.syncWebDav.CheckedChanged += new System.EventHandler(this.syncWebDav_CheckedChanged);
@@ -225,8 +226,8 @@
             this.dbNameTxtBox.SelectedText = "";
             this.dbNameTxtBox.SelectionLength = 0;
             this.dbNameTxtBox.SelectionStart = 0;
-            this.dbNameTxtBox.Size = new System.Drawing.Size(200, 23);
-            this.dbNameTxtBox.TabIndex = 6;
+            this.dbNameTxtBox.Size = new System.Drawing.Size(257, 23);
+            this.dbNameTxtBox.TabIndex = 0;
             this.dbNameTxtBox.TabStop = false;
             this.dbNameTxtBox.UseSystemPasswordChar = false;
             // 
@@ -242,16 +243,28 @@
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Primary = true;
             this.saveBtn.Size = new System.Drawing.Size(55, 36);
-            this.saveBtn.TabIndex = 5;
+            this.saveBtn.TabIndex = 6;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = true;
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_ClickAsync);
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(0, 64);
+            this.progressBar.MarqueeAnimationSpeed = 20;
+            this.progressBar.Maximum = 200;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(411, 2);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.TabIndex = 12;
+            this.progressBar.Visible = false;
             // 
             // databaseSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 531);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.webDavSettingsPanel);
             this.Controls.Add(this.dbNameTxtSett);
@@ -284,5 +297,6 @@
         private MaterialSkin.Controls.MaterialFlatButton cancelBtn;
         private MaterialSkin.Controls.MaterialRaisedButton saveBtn;
         private MaterialSkin.Controls.MaterialCheckBox darkThemeChk;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

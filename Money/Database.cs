@@ -21,6 +21,8 @@ namespace Money
         public string webDavUsername { get; set; }
         public string webDavPass {get;set;}
 
+        public DateTime modDateTime { get; set; }
+
         public int AccountIdFromName(string name)
         {
             int i = 0;
@@ -55,6 +57,7 @@ namespace Money
 
             this.darkTheme = db.darkTheme;
             this.payees = db.payees;
+            this.modDateTime = db.modDateTime;
 
             foreach (Account ac in this.accounts)
                 ac.RecalculateBalance();
@@ -62,8 +65,23 @@ namespace Money
 
         public void Save(string path)
         {
-            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
-            File.WriteAllText(path, json);
+            if (File.Exists(path))
+            {
+                if (JsonConvert.SerializeObject(this, Formatting.Indented) == File.ReadAllText(path))
+                    return;
+                else
+                {
+                    modDateTime = DateTime.Now;
+                    string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+                    File.WriteAllText(path, json);
+                }
+            }
+            else
+            {
+                modDateTime = DateTime.Now;
+                string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+                File.WriteAllText(path, json);
+            }
         }
     }
 }

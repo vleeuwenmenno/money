@@ -32,7 +32,6 @@ namespace MoneyUI
         {
             this.components = new System.ComponentModel.Container();
             this.addAccountBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.exitBtn = new MaterialSkin.Controls.MaterialFlatButton();
             this.settingsBtn = new MaterialSkin.Controls.MaterialFlatButton();
             this.accountListView = new MaterialSkin.Controls.MaterialListView();
             this.accountName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,6 +42,8 @@ namespace MoneyUI
             this.monthBackBtn = new MaterialSkin.Controls.MaterialFlatButton();
             this.monthForwardBtn = new MaterialSkin.Controls.MaterialFlatButton();
             this.monthLabel = new MaterialSkin.Controls.MaterialLabel();
+            this.syncBtn = new MaterialSkin.Controls.MaterialFlatButton();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,27 +61,9 @@ namespace MoneyUI
             this.addAccountBtn.Primary = false;
             this.addAccountBtn.Size = new System.Drawing.Size(115, 36);
             this.addAccountBtn.TabIndex = 1;
-            this.addAccountBtn.Text = "Add Account";
+            this.addAccountBtn.Text = "Add account";
             this.addAccountBtn.UseVisualStyleBackColor = true;
             this.addAccountBtn.Click += new System.EventHandler(this.addAccountBtn_Click);
-            // 
-            // exitBtn
-            // 
-            this.exitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitBtn.AutoSize = true;
-            this.exitBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.exitBtn.Depth = 0;
-            this.exitBtn.Icon = null;
-            this.exitBtn.Location = new System.Drawing.Point(229, 549);
-            this.exitBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.exitBtn.MouseState = MaterialSkin.MouseState.HOVER;
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Primary = false;
-            this.exitBtn.Size = new System.Drawing.Size(50, 36);
-            this.exitBtn.TabIndex = 0;
-            this.exitBtn.Text = "Exit";
-            this.exitBtn.UseVisualStyleBackColor = true;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
             // settingsBtn
             // 
@@ -89,7 +72,7 @@ namespace MoneyUI
             this.settingsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.settingsBtn.Depth = 0;
             this.settingsBtn.Icon = null;
-            this.settingsBtn.Location = new System.Drawing.Point(136, 549);
+            this.settingsBtn.Location = new System.Drawing.Point(194, 549);
             this.settingsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.settingsBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.settingsBtn.Name = "settingsBtn";
@@ -156,7 +139,7 @@ namespace MoneyUI
             // 
             // monthBackBtn
             // 
-            this.monthBackBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.monthBackBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.monthBackBtn.AutoSize = true;
             this.monthBackBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.monthBackBtn.BackColor = System.Drawing.SystemColors.Control;
@@ -175,7 +158,7 @@ namespace MoneyUI
             // 
             // monthForwardBtn
             // 
-            this.monthForwardBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.monthForwardBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.monthForwardBtn.AutoSize = true;
             this.monthForwardBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.monthForwardBtn.BackColor = System.Drawing.SystemColors.Control;
@@ -194,7 +177,7 @@ namespace MoneyUI
             // 
             // monthLabel
             // 
-            this.monthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.monthLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.monthLabel.AutoSize = true;
             this.monthLabel.BackColor = System.Drawing.Color.Transparent;
             this.monthLabel.Depth = 0;
@@ -208,17 +191,48 @@ namespace MoneyUI
             this.monthLabel.Text = "materialLabel2";
             this.monthLabel.Click += new System.EventHandler(this.monthLabel_Click);
             // 
+            // syncBtn
+            // 
+            this.syncBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.syncBtn.AutoSize = true;
+            this.syncBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.syncBtn.Depth = 0;
+            this.syncBtn.Icon = null;
+            this.syncBtn.Location = new System.Drawing.Point(133, 549);
+            this.syncBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.syncBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.syncBtn.Name = "syncBtn";
+            this.syncBtn.Primary = false;
+            this.syncBtn.Size = new System.Drawing.Size(56, 36);
+            this.syncBtn.TabIndex = 9;
+            this.syncBtn.Text = "Sync";
+            this.syncBtn.UseVisualStyleBackColor = true;
+            this.syncBtn.Visible = false;
+            this.syncBtn.Click += new System.EventHandler(this.syncBtn_Click);
+            // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(0, 64);
+            this.progressBar.MarqueeAnimationSpeed = 20;
+            this.progressBar.Maximum = 200;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(292, 2);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.TabIndex = 13;
+            this.progressBar.Visible = false;
+            // 
             // databaseOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 600);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.syncBtn);
             this.Controls.Add(this.monthBackBtn);
             this.Controls.Add(this.monthForwardBtn);
             this.Controls.Add(this.monthLabel);
             this.Controls.Add(this.settingsBtn);
             this.Controls.Add(this.addAccountBtn);
-            this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.accountListView);
             this.Name = "databaseOverview";
             this.Text = "Database Overview";
@@ -233,7 +247,6 @@ namespace MoneyUI
 
         #endregion
         private MaterialSkin.Controls.MaterialFlatButton addAccountBtn;
-        private MaterialSkin.Controls.MaterialFlatButton exitBtn;
         private MaterialSkin.Controls.MaterialFlatButton settingsBtn;
         private MaterialSkin.Controls.MaterialListView accountListView;
         private System.Windows.Forms.ColumnHeader accountName;
@@ -244,5 +257,7 @@ namespace MoneyUI
         private MaterialSkin.Controls.MaterialFlatButton monthBackBtn;
         private MaterialSkin.Controls.MaterialFlatButton monthForwardBtn;
         private MaterialSkin.Controls.MaterialLabel monthLabel;
+        private MaterialSkin.Controls.MaterialFlatButton syncBtn;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

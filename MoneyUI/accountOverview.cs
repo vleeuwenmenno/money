@@ -49,25 +49,7 @@ namespace MoneyUI
 
         private void accountOverview_Load(object sender, EventArgs e)
         {
-            if (db.accounts.Count > 0)
-            {
-                this.Text = db.accounts[ac].accountName + " overview";
-                currentBalance.Text = db.accounts[ac].currencyChar + " " + String.Format("{0:n}", db.accounts[ac].currentBalance);
-
-                if (Tools.GetCardType(db.accounts[ac].accountNumber.Trim().Replace("-", "")) != CardType.Unknown)
-                {
-                    acNumLabel.Text = (Creditcard.MaskDigits(db.accounts[ac].accountNumber));
-                }
-                else if (Tools.ValidateIBAN(db.accounts[ac].accountNumber))
-                    acNumLabel.Text = (Regex.Replace(db.accounts[ac].accountNumber, ".{4}", "$0 ").Trim());
-                else
-                    acNumLabel.Text = (db.accounts[ac].accountNumber);
-            }
-
-            acNumLabel.Location = new System.Drawing.Point(this.Size.Width - acNumLabel.Size.Width - 8, acNumLabel.Location.Y);
-            currentBalance.Location = new System.Drawing.Point(this.Size.Width - currentBalance.Size.Width - 8, currentBalance.Location.Y);
-            expectedEndBalance.Location = new System.Drawing.Point(this.Size.Width - expectedEndBalance.Size.Width - 8, expectedEndBalance.Location.Y);
-            expectedEndBalanceLabel.Location = new System.Drawing.Point(this.Size.Width - expectedEndBalanceLabel.Size.Width - 12 - expectedEndBalance.Size.Width, expectedEndBalanceLabel.Location.Y);
+            UpdateGUI();
         }
 
         public void UpdateGUI()
@@ -100,6 +82,7 @@ namespace MoneyUI
                     {
                         ListViewItem item = new ListViewItem(t.status.ToString()); //status
 
+                        item.Tag = t.id;
                         item.SubItems.Add(t.desc); //desc
                         item.SubItems.Add(t.dateTime.ToString("dd-MM-yyyy")); //date
                         item.SubItems.Add(t.payee); //payee
@@ -165,6 +148,142 @@ namespace MoneyUI
             {
                 vac = ac;
                 UpdateGUI();
+            }
+        }
+
+        private ListViewItem GetItemFromPoint(ListView listView, Point mousePosition)
+        {
+            // translate the mouse position from screen coordinates to 
+            // client coordinates within the given ListView
+            Point localPoint = listView.PointToClient(mousePosition);
+            return listView.GetItemAt(localPoint.X, localPoint.Y);
+        }
+
+        ListViewItem transactionHistoryItem;
+
+        private void transactionHistory_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (transactionHistory.FocusedItem.Bounds.Contains(e.Location) == true)
+                {
+                    // call it like this:
+                    transactionHistoryItem = GetItemFromPoint(transactionHistory, Cursor.Position);
+
+                    if (transactionHistoryItem.Text == "OnHold")
+                        executeToolStripMenuItem.Enabled = true;
+                    else
+                        executeToolStripMenuItem.Enabled = false;
+
+                    if (transactionHistoryItem.Text == "Scheduled")
+                        skipToolStripMenuItem.Enabled = true;
+                    else
+                        skipToolStripMenuItem.Enabled = false;
+
+                    transactionHistoryContextMenu.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < db.accounts[ac].transactions.Count; i++)
+            {
+                Transaction t = db.accounts[ac].transactions[i];
+                if (t.id == ((Guid)transactionHistoryItem.Tag))
+                {
+                    t.status = TransactionStatus.Completed;
+
+                    foreach (Account ac in db.accounts)
+                        ac.RecalculateBalance();
+
+                    UpdateGUI();
+                    db.Save(dbPath);
+                    return;
+                }
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < db.accounts[ac].transactions.Count; i++)
+            {
+                Transaction t = db.accounts[ac].transactions[i];
+                if (t.id == ((Guid)transactionHistoryItem.Tag))
+                {
+                    t.status = TransactionStatus.Skipped;
+
+                    foreach (Account ac in db.accounts)
+                        ac.RecalculateBalance();
+
+                    UpdateGUI();
+                    db.Save(dbPath);
+                    return;
+                }
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult r = MessageBox.Show("Are you sure you want to delete this transaction? (This action cannot be undone!)", "Are you sure?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+            if (r == DialogResult.Yes)
+            {
+                for(int i = 0; i < db.accounts[ac].transactions.Count; i++)
+                {
+                    Transaction t = db.accounts[ac].transactions[i];
+                    if (t.id == ((Guid)transactionHistoryItem.Tag))
+                    {
+                        if (t.intern != Guid.Empty)
+                        {
+                            r = MessageBox.Show("The payee in this transaction is internal, do you want to delete the payee transaction too?", "Delete linked transaction?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            
+                            if (r == DialogResult.Yes)
+                            {
+                                int account = 0;
+                                Transaction internT = null;
+                                foreach (Account a in db.accounts)
+                                {
+                                    if (a.GetTransaction(t.intern) != null)
+                                    {
+                                        internT = a.GetTransaction(t.intern);
+                                        break;
+                                    }
+                                    account++;
+                                }
+
+                                if (internT != null)
+                                    db.accounts[account].transactions.Remove(internT);
+                                else
+                                    MessageBox.Show("Linked transaction could not be found, it's probably already gone.", "Not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                            else if (r== DialogResult.No)
+                            {
+                                int account = 0;
+                                Transaction internT = null;
+                                foreach (Account a in db.accounts)
+                                {
+                                    if (a.GetTransaction(t.intern) != null)
+                                    {
+                                        internT = a.GetTransaction(t.intern);
+                                        break;
+                                    }
+                                    account++;
+                                }
+                                internT.intern = Guid.Empty;
+                            }
+                        }
+
+                        db.accounts[ac].transactions.Remove(t);
+
+                        foreach (Account ac in db.accounts)
+                            ac.RecalculateBalance();
+
+                        UpdateGUI();
+                        db.Save(dbPath);
+                        return;
+                    }
+                }
             }
         }
     }

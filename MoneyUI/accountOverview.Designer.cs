@@ -55,10 +55,17 @@
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
             this.acNumLabel = new MaterialSkin.Controls.MaterialLabel();
             this.uiChecker = new System.Windows.Forms.Timer(this.components);
+            this.transactionHistoryContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.accountOverviewTabs.SuspendLayout();
             this.overviewTab.SuspendLayout();
             this.transactionHistoryTab.SuspendLayout();
             this.schTransactionTab.SuspendLayout();
+            this.transactionHistoryContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // accountOverviewTabs
@@ -155,6 +162,7 @@
             this.transactionHistory.TabIndex = 7;
             this.transactionHistory.UseCompatibleStateImageBehavior = false;
             this.transactionHistory.View = System.Windows.Forms.View.Details;
+            this.transactionHistory.MouseClick += new System.Windows.Forms.MouseEventHandler(this.transactionHistory_MouseClick);
             this.transactionHistory.Resize += new System.EventHandler(this.materialListView2_Resize);
             // 
             // columnHeader6
@@ -354,6 +362,49 @@
             this.uiChecker.Enabled = true;
             this.uiChecker.Tick += new System.EventHandler(this.uiChecker_Tick);
             // 
+            // transactionHistoryContextMenu
+            // 
+            this.transactionHistoryContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.executeToolStripMenuItem,
+            this.skipToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.editToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.transactionHistoryContextMenu.Name = "transactionHistoryContextMenu";
+            this.transactionHistoryContextMenu.Size = new System.Drawing.Size(181, 120);
+            // 
+            // executeToolStripMenuItem
+            // 
+            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.executeToolStripMenuItem.Text = "Execute";
+            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // skipToolStripMenuItem
+            // 
+            this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
+            this.skipToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.skipToolStripMenuItem.Text = "Skip";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
             // accountOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,6 +424,7 @@
             this.transactionHistoryTab.PerformLayout();
             this.schTransactionTab.ResumeLayout(false);
             this.schTransactionTab.PerformLayout();
+            this.transactionHistoryContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -406,5 +458,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader17;
         private MaterialSkin.Controls.MaterialLabel acNumLabel;
         private System.Windows.Forms.Timer uiChecker;
+        private System.Windows.Forms.ContextMenuStrip transactionHistoryContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem skipToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

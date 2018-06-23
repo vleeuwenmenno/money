@@ -19,6 +19,15 @@ namespace Money
         public char currencyChar { get; set; }
         public List<Transaction> transactions { get; set; }
 
+        public Transaction GetTransaction(Guid id)
+        {
+            foreach (Transaction t in transactions)
+                if (id == t.id)
+                    return t;
+
+            return null;
+        }
+
         public Account()
         {
             currencyChar = '€';
@@ -31,7 +40,8 @@ namespace Money
             if (transactions != null)
                 foreach (Transaction t in transactions)
                 {
-                    balance += t.amount;
+                    if (t.status == TransactionStatus.Completed)
+                        balance += t.amount;
                 }
 
             if (save)
