@@ -399,6 +399,7 @@
             this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
             this.skipToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.skipToolStripMenuItem.Text = "Skip";
+            this.skipToolStripMenuItem.Click += new System.EventHandler(this.skipToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

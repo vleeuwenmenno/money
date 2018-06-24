@@ -97,6 +97,20 @@ namespace MoneyUI
                 t.type = TransactionType.Income;
             }
 
+            t.status = TransactionStatus.Scheduled;
+
+            if (t.dateTime.Date == DateTime.Now.Date)
+            {
+                DialogResult res = MessageBox.Show("Transaction date is today, do you want to execute this transaction now? Clicking `No` will set the status to: `OnHold`", "Execute transaction now?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+
+                if (res == DialogResult.Yes)
+                    t.status = TransactionStatus.Completed;
+                else if (res == DialogResult.No)
+                    t.status = TransactionStatus.OnHold;
+                else
+                    return;
+            }
+
             if (t.payee.StartsWith("[Internal]"))
             {
                 string payee = t.payee.Replace("[Internal]", "");
@@ -109,6 +123,7 @@ namespace MoneyUI
                 flip.payee = t.payee;
                 flip.dateTime = t.dateTime;
                 flip.type = t.type;
+                flip.status = t.status;
 
                 t.intern = flip.id;
                 flip.intern = t.id;
@@ -117,20 +132,6 @@ namespace MoneyUI
                     db.accounts[db.AccountIdFromName(payee)].transactions = new List<Transaction>();
 
                 db.accounts[db.AccountIdFromName(payee)].transactions.Add(flip);
-            }
-
-            t.status = TransactionStatus.Scheduled;
-
-            if (t.dateTime.Date == DateTime.Now.Date)
-            {
-                DialogResult res = MessageBox.Show("It seems like the transaction date is today, do you want to execute this transaction right away?\nClicking no will set the status to: OnHold", "Execute transaction now?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
-
-                if (res == DialogResult.Yes)
-                    t.status = TransactionStatus.Completed;
-                else if (res == DialogResult.No)
-                    t.status = TransactionStatus.OnHold;
-                else
-                    return;
             }
 
             db.accounts[db.AccountIdFromName(transactionAccountI.Text)].transactions.Add(t);

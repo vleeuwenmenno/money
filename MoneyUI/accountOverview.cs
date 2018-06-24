@@ -194,6 +194,22 @@ namespace MoneyUI
                 {
                     t.status = TransactionStatus.Completed;
 
+                    if (t.intern != Guid.Empty)
+                    {
+                        int account = 0;
+                        Transaction internT = null;
+                        foreach (Account a in db.accounts)
+                        {
+                            if (a.GetTransaction(t.intern) != null)
+                            {
+                                internT = a.GetTransaction(t.intern);
+                                break;
+                            }
+                            account++;
+                        }
+                        internT.status = TransactionStatus.Completed;
+                    }
+
                     foreach (Account ac in db.accounts)
                         ac.RecalculateBalance();
 
@@ -206,26 +222,12 @@ namespace MoneyUI
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < db.accounts[ac].transactions.Count; i++)
-            {
-                Transaction t = db.accounts[ac].transactions[i];
-                if (t.id == ((Guid)transactionHistoryItem.Tag))
-                {
-                    t.status = TransactionStatus.Skipped;
-
-                    foreach (Account ac in db.accounts)
-                        ac.RecalculateBalance();
-
-                    UpdateGUI();
-                    db.Save(dbPath);
-                    return;
-                }
-            }
+            
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult r = MessageBox.Show("Are you sure you want to delete this transaction? (This action cannot be undone!)", "Are you sure?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            DialogResult r = MessageBox.Show("Are you sure you want to delete this transaction?", "Are you sure?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
             if (r == DialogResult.Yes)
             {
@@ -283,6 +285,41 @@ namespace MoneyUI
                         db.Save(dbPath);
                         return;
                     }
+                }
+            }
+        }
+
+        private void skipToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < db.accounts[ac].transactions.Count; i++)
+            {
+                Transaction t = db.accounts[ac].transactions[i];
+                if (t.id == ((Guid)transactionHistoryItem.Tag))
+                {
+                    t.status = TransactionStatus.Skipped;
+
+                    if (t.intern != Guid.Empty)
+                    {
+                        int account = 0;
+                        Transaction internT = null;
+                        foreach (Account a in db.accounts)
+                        {
+                            if (a.GetTransaction(t.intern) != null)
+                            {
+                                internT = a.GetTransaction(t.intern);
+                                break;
+                            }
+                            account++;
+                        }
+                        internT.status = TransactionStatus.Skipped;
+                    }
+
+                    foreach (Account ac in db.accounts)
+                        ac.RecalculateBalance();
+
+                    UpdateGUI();
+                    db.Save(dbPath);
+                    return;
                 }
             }
         }
