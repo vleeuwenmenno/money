@@ -102,9 +102,8 @@ namespace MoneyUI
             catch (Exception ex)
             { }
             
-            string[] currencySymbols = { "EUR", "USD", "GBP", "THB" };
-            foreach (string c in currencySymbols)
-                currencyTxt.Items.Add(c);
+            foreach (KeyValuePair<string, decimal> c in Tools.ExchangeRateSnapshot())
+                currencyTxt.Items.Add(c.Key);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)

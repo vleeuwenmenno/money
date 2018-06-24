@@ -41,7 +41,7 @@ namespace Money
                 foreach (Transaction t in transactions)
                 {
                     if (t.status == TransactionStatus.Completed)
-                        balance += t.amount;
+                        balance += Tools.ConvertCurrency(t.exchangeSnapshot, t.currencyISO4217, currencyISO4217, t.amount);
                 }
 
             if (save)

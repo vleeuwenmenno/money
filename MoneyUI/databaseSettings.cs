@@ -206,6 +206,9 @@ namespace MoneyUI
                 db.webDavUsername = "";
                 db.webDavHost = "";
                 db.webDavPass = "";
+
+                db.Save(dbPath);
+                this.Close();
             }
         }
     }

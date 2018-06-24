@@ -55,6 +55,15 @@ namespace MoneyUI
 
             ComboBoxItem itemi = new ComboBoxItem(db.accounts[ac].accountName, Image.FromFile(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/icons/" + s.ToLower() + ".png"));
             transactionAccountI.SelectedIndex = transactionAccountI.Items.Add(itemi);
+
+            foreach (KeyValuePair<string, decimal> c in Tools.ExchangeRateSnapshot())
+            {
+                currencySelectorI.Items.Add(c.Key);
+                currencySelectorE.Items.Add(c.Key);
+            }
+
+            currencySelectorI.Text = db.accounts[ac].currencyISO4217;
+            currencySelectorE.Text = db.accounts[ac].currencyISO4217;
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -76,9 +85,7 @@ namespace MoneyUI
             Transaction t = new Transaction();
 
             t.id = Guid.NewGuid();
-            t.currencyISO4217 = db.accounts[ac].currencyISO4217;
-
-            t.exchange = Tools.ExchangeRate(t.currencyISO4217);
+            t.exchangeSnapshot = Tools.ExchangeRateSnapshot();
 
             if (db.accounts[ac].transactions == null)
                 db.accounts[ac].transactions = new List<Transaction>();
@@ -90,6 +97,7 @@ namespace MoneyUI
                 t.payee = transactionPayeeE.Text;
                 t.dateTime = transactionDateE.Value;
                 t.type = TransactionType.Expense;
+                t.currencyISO4217 = currencySelectorE.Text;
             }
             else
             {
@@ -98,6 +106,7 @@ namespace MoneyUI
                 t.payee = transactionPayeeI.Text;
                 t.dateTime = transactionDateI.Value;
                 t.type = TransactionType.Income;
+                t.currencyISO4217 = currencySelectorI.Text;
             }
 
             t.status = TransactionStatus.Scheduled;

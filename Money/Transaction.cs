@@ -10,7 +10,7 @@ namespace Money
     {
         public decimal amount { get; set; }
 
-        public decimal exchange { get; set; } //USD/CURRENCY
+        public Dictionary<string, decimal> exchangeSnapshot { get; set; }
 
         public string currencyISO4217 { get; set; }
 

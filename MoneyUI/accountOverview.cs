@@ -93,7 +93,7 @@ namespace MoneyUI
                                 item.SubItems.Add(t.payee); //payee
 
                                 if (t.currencyISO4217 != db.accounts[ac].currencyISO4217)
-                                    item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount) + "(" + db.accounts[ac].currencyISO4217 + " WIP" + ")"); //amount
+                                    item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount) + "(" + db.accounts[ac].currencyISO4217 + " " + Math.Round(Tools.ConvertCurrency(t.exchangeSnapshot, t.currencyISO4217, db.accounts[ac].currencyISO4217, t.amount), 2) + ")"); //amount
                                 else
                                     item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount)); //amount
 

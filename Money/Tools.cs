@@ -94,6 +94,50 @@ namespace Money
             return 0.0m;
         }
 
+        public static decimal ConvertCurrency(Dictionary<string, decimal> snapshot, string from, string to, decimal value)
+        {
+            //EURO > USD > THB
+            decimal valueUsd = (1m / snapshot[from]) * value;
+            decimal valueTo = snapshot[to] * valueUsd;
+            return valueTo;
+        }
+
+        public static Dictionary<string, decimal> ExchangeRateSnapshot()
+        {
+            Dictionary<string, decimal> db = new Dictionary<string, decimal>();
+            string url = "http://finance.yahoo.com/webservice/" + "v1/symbols/allcurrencies/quote?format=xml";
+            try
+            {
+                // Load the data.
+                XmlDocument doc = new XmlDocument();
+                doc.Load(url);
+
+                // Process the resource nodes.
+                XmlNode root = doc.DocumentElement;
+                string xquery = "descendant::resource[@classname='Quote']";
+                foreach (XmlNode node in root.SelectNodes(xquery))
+                {
+                    const string name_query =
+                        "descendant::field[@name='name']";
+                    const string price_query =
+                        "descendant::field[@name='price']";
+
+                    string name =
+                        node.SelectSingleNode(name_query).InnerText;
+                    string price =
+                        node.SelectSingleNode(price_query).InnerText;
+                    decimal inverse = 1m / decimal.Parse(price);
+
+                    if (name.StartsWith("USD/"))
+                        db.Add(name.Replace("USD/", ""), decimal.Parse(price));
+                }
+            }
+            catch (Exception ex)
+            { }
+
+            return db;
+        }
+
         // Array of CardTypeInfo objects.
         // Used by GetCardType() to identify credit card types.
         private static CardTypeInfo[] _cardTypeInfo = {
