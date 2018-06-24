@@ -48,6 +48,7 @@ namespace MoneyUUI
             monthForwardBtn.Clicked += monthForwardBtn_Clicked;
 
             PrepareTreeView();
+            this.Resize(300, 500);
             accountListStore.AppendValues("", "");
         }
 

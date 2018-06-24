@@ -37,6 +37,7 @@ namespace MoneyUUI
             addDatabaseBtn.Clicked += addDatabaseBtn_Clicked;
 
             PrepareTreeView();
+            this.Resize(640, 350);
 
             history = new List<KeyValuePair<string, string>>();
 
