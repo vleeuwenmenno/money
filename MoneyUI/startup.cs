@@ -1,6 +1,4 @@
-﻿using MaterialSkin;
-using MaterialSkin.Controls;
-using Money;
+﻿using Money;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,7 +13,7 @@ using System.Windows.Forms;
 
 namespace MoneyUI
 {
-    public partial class startup : MaterialForm
+    public partial class startup : Form
     {
         public Database db;
         public string dbPath;
@@ -25,18 +23,6 @@ namespace MoneyUI
         public startup()
         {
             InitializeComponent();
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         private void exitBtn_Click(object sender, EventArgs e)

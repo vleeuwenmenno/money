@@ -1,6 +1,4 @@
-﻿using MaterialSkin.Controls;
-using MaterialSkin;
-using System;
+﻿using System;
 using Money;
 using System.Net;
 using System.Threading;
@@ -12,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace MoneyUI
 {
-    public partial class databaseSettings : MaterialForm
+    public partial class databaseSettings : Form
     {
         public Database db;
         public string dbPath;
@@ -23,22 +21,6 @@ namespace MoneyUI
 
             this.db = db;
             this.dbPath = dbPath;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         private void databaseSettings_Load(object sender, EventArgs e)

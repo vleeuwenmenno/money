@@ -29,29 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.loadDbBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.newDbBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.startupExitBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.recentsList = new MaterialSkin.Controls.MaterialListView();
-            this.dbName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.filePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.loadDbBtn = new System.Windows.Forms.Button();
+            this.newDbBtn = new System.Windows.Forms.Button();
+            this.startupExitBtn = new System.Windows.Forms.Button();
             this.rightMouseMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentsList = new System.Windows.Forms.ListView();
+            this.dbNameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dbLocationColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.rightMouseMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // loadDbBtn
             // 
+            this.loadDbBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.loadDbBtn.AutoSize = true;
             this.loadDbBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.loadDbBtn.Depth = 0;
-            this.loadDbBtn.Icon = null;
-            this.loadDbBtn.Location = new System.Drawing.Point(105, 402);
-            this.loadDbBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.loadDbBtn.Location = new System.Drawing.Point(12, 280);
             this.loadDbBtn.Name = "loadDbBtn";
-            this.loadDbBtn.Primary = true;
-            this.loadDbBtn.Size = new System.Drawing.Size(76, 36);
+            this.loadDbBtn.Size = new System.Drawing.Size(52, 23);
             this.loadDbBtn.TabIndex = 7;
             this.loadDbBtn.Text = "Browse";
             this.loadDbBtn.UseVisualStyleBackColor = true;
@@ -59,106 +55,82 @@
             // 
             // newDbBtn
             // 
+            this.newDbBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.newDbBtn.AutoSize = true;
             this.newDbBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.newDbBtn.Depth = 0;
-            this.newDbBtn.Icon = null;
-            this.newDbBtn.Location = new System.Drawing.Point(187, 402);
+            this.newDbBtn.Location = new System.Drawing.Point(71, 280);
             this.newDbBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.newDbBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.newDbBtn.Name = "newDbBtn";
-            this.newDbBtn.Primary = false;
-            this.newDbBtn.Size = new System.Drawing.Size(123, 36);
+            this.newDbBtn.Size = new System.Drawing.Size(88, 23);
             this.newDbBtn.TabIndex = 7;
             this.newDbBtn.Text = "New Database";
             this.newDbBtn.UseVisualStyleBackColor = true;
             this.newDbBtn.Click += new System.EventHandler(this.newDbBtn_Click);
             // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(101, 88);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(63, 19);
-            this.materialLabel1.TabIndex = 6;
-            this.materialLabel1.Text = "Recents";
-            // 
             // startupExitBtn
             // 
+            this.startupExitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.startupExitBtn.AutoSize = true;
             this.startupExitBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.startupExitBtn.Depth = 0;
-            this.startupExitBtn.Icon = null;
-            this.startupExitBtn.Location = new System.Drawing.Point(664, 399);
+            this.startupExitBtn.Location = new System.Drawing.Point(582, 280);
             this.startupExitBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.startupExitBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.startupExitBtn.Name = "startupExitBtn";
-            this.startupExitBtn.Primary = false;
-            this.startupExitBtn.Size = new System.Drawing.Size(50, 36);
+            this.startupExitBtn.Size = new System.Drawing.Size(34, 23);
             this.startupExitBtn.TabIndex = 4;
             this.startupExitBtn.Text = "Exit";
             this.startupExitBtn.UseVisualStyleBackColor = true;
             this.startupExitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            // 
-            // recentsList
-            // 
-            this.recentsList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.recentsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.dbName,
-            this.filePath});
-            this.recentsList.Depth = 0;
-            this.recentsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.recentsList.FullRowSelect = true;
-            this.recentsList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.recentsList.Location = new System.Drawing.Point(105, 110);
-            this.recentsList.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.recentsList.MouseState = MaterialSkin.MouseState.OUT;
-            this.recentsList.Name = "recentsList";
-            this.recentsList.OwnerDraw = true;
-            this.recentsList.Size = new System.Drawing.Size(609, 280);
-            this.recentsList.TabIndex = 5;
-            this.recentsList.UseCompatibleStateImageBehavior = false;
-            this.recentsList.View = System.Windows.Forms.View.Details;
-            this.recentsList.DoubleClick += new System.EventHandler(this.recentsList_DoubleClick);
-            this.recentsList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.recentsList_MouseClick);
-            // 
-            // dbName
-            // 
-            this.dbName.Text = "Name";
-            this.dbName.Width = 180;
-            // 
-            // filePath
-            // 
-            this.filePath.Text = "Location";
-            this.filePath.Width = 429;
             // 
             // rightMouseMenu
             // 
             this.rightMouseMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeToolStripMenuItem});
             this.rightMouseMenu.Name = "rightMouseMenu";
-            this.rightMouseMenu.Size = new System.Drawing.Size(181, 48);
+            this.rightMouseMenu.Size = new System.Drawing.Size(118, 26);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.removeToolStripMenuItem.Text = "Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // recentsList
+            // 
+            this.recentsList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.recentsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.dbNameColumn,
+            this.dbLocationColumn});
+            this.recentsList.FullRowSelect = true;
+            this.recentsList.Location = new System.Drawing.Point(12, 12);
+            this.recentsList.Name = "recentsList";
+            this.recentsList.Size = new System.Drawing.Size(604, 259);
+            this.recentsList.TabIndex = 8;
+            this.recentsList.UseCompatibleStateImageBehavior = false;
+            this.recentsList.View = System.Windows.Forms.View.Details;
+            this.recentsList.DoubleClick += new System.EventHandler(this.recentsList_DoubleClick);
+            this.recentsList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.recentsList_MouseClick);
+            // 
+            // dbNameColumn
+            // 
+            this.dbNameColumn.Text = "Database name";
+            this.dbNameColumn.Width = 240;
+            // 
+            // dbLocationColumn
+            // 
+            this.dbLocationColumn.Text = "File Location";
+            this.dbLocationColumn.Width = 360;
             // 
             // startup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(626, 314);
+            this.Controls.Add(this.recentsList);
             this.Controls.Add(this.loadDbBtn);
             this.Controls.Add(this.newDbBtn);
-            this.Controls.Add(this.materialLabel1);
-            this.Controls.Add(this.recentsList);
             this.Controls.Add(this.startupExitBtn);
             this.Name = "startup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -171,15 +143,14 @@
         }
 
         #endregion
-        private MaterialSkin.Controls.MaterialFlatButton newDbBtn;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialFlatButton startupExitBtn;
-        private MaterialSkin.Controls.MaterialListView recentsList;
-        private System.Windows.Forms.ColumnHeader dbName;
-        private System.Windows.Forms.ColumnHeader filePath;
-        private MaterialSkin.Controls.MaterialRaisedButton loadDbBtn;
+        private System.Windows.Forms.Button newDbBtn;
+        private System.Windows.Forms.Button startupExitBtn;
+        private System.Windows.Forms.Button loadDbBtn;
         private System.Windows.Forms.ContextMenuStrip rightMouseMenu;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+        private System.Windows.Forms.ListView recentsList;
+        private System.Windows.Forms.ColumnHeader dbNameColumn;
+        private System.Windows.Forms.ColumnHeader dbLocationColumn;
     }
 }
 

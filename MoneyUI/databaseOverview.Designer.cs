@@ -31,19 +31,19 @@ namespace MoneyUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.addAccountBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.settingsBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.accountListView = new MaterialSkin.Controls.MaterialListView();
-            this.accountName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.accountBalance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.addAccountBtn = new System.Windows.Forms.Button();
+            this.settingsBtn = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiChecker = new System.Windows.Forms.Timer(this.components);
-            this.monthBackBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.monthForwardBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.monthLabel = new MaterialSkin.Controls.MaterialLabel();
-            this.syncBtn = new MaterialSkin.Controls.MaterialFlatButton();
+            this.monthBackBtn = new System.Windows.Forms.Button();
+            this.monthForwardBtn = new System.Windows.Forms.Button();
+            this.monthLabel = new System.Windows.Forms.Label();
+            this.syncBtn = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.accountListView = new System.Windows.Forms.ListView();
+            this.accountColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.balanceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,14 +52,10 @@ namespace MoneyUI
             this.addAccountBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.addAccountBtn.AutoSize = true;
             this.addAccountBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addAccountBtn.Depth = 0;
-            this.addAccountBtn.Icon = null;
-            this.addAccountBtn.Location = new System.Drawing.Point(13, 549);
+            this.addAccountBtn.Location = new System.Drawing.Point(13, 423);
             this.addAccountBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.addAccountBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.addAccountBtn.Name = "addAccountBtn";
-            this.addAccountBtn.Primary = false;
-            this.addAccountBtn.Size = new System.Drawing.Size(115, 36);
+            this.addAccountBtn.Size = new System.Drawing.Size(78, 23);
             this.addAccountBtn.TabIndex = 1;
             this.addAccountBtn.Text = "Add account";
             this.addAccountBtn.UseVisualStyleBackColor = true;
@@ -70,53 +66,14 @@ namespace MoneyUI
             this.settingsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.settingsBtn.AutoSize = true;
             this.settingsBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.settingsBtn.Depth = 0;
-            this.settingsBtn.Icon = null;
-            this.settingsBtn.Location = new System.Drawing.Point(194, 549);
+            this.settingsBtn.Location = new System.Drawing.Point(224, 423);
             this.settingsBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.settingsBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.settingsBtn.Name = "settingsBtn";
-            this.settingsBtn.Primary = false;
-            this.settingsBtn.Size = new System.Drawing.Size(85, 36);
+            this.settingsBtn.Size = new System.Drawing.Size(55, 23);
             this.settingsBtn.TabIndex = 1;
             this.settingsBtn.Text = "Settings";
             this.settingsBtn.UseVisualStyleBackColor = true;
             this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
-            // 
-            // accountListView
-            // 
-            this.accountListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.accountListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.accountListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.accountName,
-            this.accountBalance});
-            this.accountListView.Depth = 0;
-            this.accountListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.accountListView.FullRowSelect = true;
-            this.accountListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.accountListView.Location = new System.Drawing.Point(1, 67);
-            this.accountListView.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.accountListView.MouseState = MaterialSkin.MouseState.OUT;
-            this.accountListView.Name = "accountListView";
-            this.accountListView.OwnerDraw = true;
-            this.accountListView.Size = new System.Drawing.Size(290, 428);
-            this.accountListView.TabIndex = 4;
-            this.accountListView.UseCompatibleStateImageBehavior = false;
-            this.accountListView.View = System.Windows.Forms.View.Details;
-            this.accountListView.SelectedIndexChanged += new System.EventHandler(this.accountListView_SelectedIndexChanged);
-            this.accountListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.accountListView_MouseClick);
-            // 
-            // accountName
-            // 
-            this.accountName.Text = "Account";
-            this.accountName.Width = 170;
-            // 
-            // accountBalance
-            // 
-            this.accountBalance.Text = "Balance";
-            this.accountBalance.Width = 120;
             // 
             // contextMenuStrip1
             // 
@@ -143,14 +100,10 @@ namespace MoneyUI
             this.monthBackBtn.AutoSize = true;
             this.monthBackBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.monthBackBtn.BackColor = System.Drawing.SystemColors.Control;
-            this.monthBackBtn.Depth = 0;
-            this.monthBackBtn.Icon = null;
-            this.monthBackBtn.Location = new System.Drawing.Point(13, 504);
+            this.monthBackBtn.Location = new System.Drawing.Point(13, 388);
             this.monthBackBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.monthBackBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.monthBackBtn.Name = "monthBackBtn";
-            this.monthBackBtn.Primary = false;
-            this.monthBackBtn.Size = new System.Drawing.Size(28, 36);
+            this.monthBackBtn.Size = new System.Drawing.Size(23, 23);
             this.monthBackBtn.TabIndex = 8;
             this.monthBackBtn.Text = "<";
             this.monthBackBtn.UseVisualStyleBackColor = false;
@@ -162,14 +115,10 @@ namespace MoneyUI
             this.monthForwardBtn.AutoSize = true;
             this.monthForwardBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.monthForwardBtn.BackColor = System.Drawing.SystemColors.Control;
-            this.monthForwardBtn.Depth = 0;
-            this.monthForwardBtn.Icon = null;
-            this.monthForwardBtn.Location = new System.Drawing.Point(251, 504);
+            this.monthForwardBtn.Location = new System.Drawing.Point(256, 388);
             this.monthForwardBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.monthForwardBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.monthForwardBtn.Name = "monthForwardBtn";
-            this.monthForwardBtn.Primary = false;
-            this.monthForwardBtn.Size = new System.Drawing.Size(28, 36);
+            this.monthForwardBtn.Size = new System.Drawing.Size(23, 23);
             this.monthForwardBtn.TabIndex = 7;
             this.monthForwardBtn.Text = ">";
             this.monthForwardBtn.UseVisualStyleBackColor = false;
@@ -180,15 +129,13 @@ namespace MoneyUI
             this.monthLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.monthLabel.AutoSize = true;
             this.monthLabel.BackColor = System.Drawing.Color.Transparent;
-            this.monthLabel.Depth = 0;
-            this.monthLabel.Font = new System.Drawing.Font("Roboto", 11F);
+            this.monthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.monthLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.monthLabel.Location = new System.Drawing.Point(99, 512);
-            this.monthLabel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.monthLabel.Location = new System.Drawing.Point(108, 391);
             this.monthLabel.Name = "monthLabel";
-            this.monthLabel.Size = new System.Drawing.Size(108, 19);
+            this.monthLabel.Size = new System.Drawing.Size(84, 20);
             this.monthLabel.TabIndex = 6;
-            this.monthLabel.Text = "materialLabel2";
+            this.monthLabel.Text = "June 2018";
             this.monthLabel.Click += new System.EventHandler(this.monthLabel_Click);
             // 
             // syncBtn
@@ -196,14 +143,10 @@ namespace MoneyUI
             this.syncBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.syncBtn.AutoSize = true;
             this.syncBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.syncBtn.Depth = 0;
-            this.syncBtn.Icon = null;
-            this.syncBtn.Location = new System.Drawing.Point(133, 549);
+            this.syncBtn.Location = new System.Drawing.Point(175, 423);
             this.syncBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.syncBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.syncBtn.Name = "syncBtn";
-            this.syncBtn.Primary = false;
-            this.syncBtn.Size = new System.Drawing.Size(56, 36);
+            this.syncBtn.Size = new System.Drawing.Size(41, 23);
             this.syncBtn.TabIndex = 9;
             this.syncBtn.Text = "Sync";
             this.syncBtn.UseVisualStyleBackColor = true;
@@ -212,7 +155,7 @@ namespace MoneyUI
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(0, 64);
+            this.progressBar.Location = new System.Drawing.Point(0, 0);
             this.progressBar.MarqueeAnimationSpeed = 20;
             this.progressBar.Maximum = 200;
             this.progressBar.Name = "progressBar";
@@ -221,11 +164,40 @@ namespace MoneyUI
             this.progressBar.TabIndex = 13;
             this.progressBar.Visible = false;
             // 
+            // accountListView
+            // 
+            this.accountListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.accountListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.accountColumn,
+            this.balanceColumn});
+            this.accountListView.FullRowSelect = true;
+            this.accountListView.Location = new System.Drawing.Point(0, 0);
+            this.accountListView.Name = "accountListView";
+            this.accountListView.Size = new System.Drawing.Size(292, 379);
+            this.accountListView.TabIndex = 14;
+            this.accountListView.UseCompatibleStateImageBehavior = false;
+            this.accountListView.View = System.Windows.Forms.View.Details;
+            this.accountListView.SelectedIndexChanged += new System.EventHandler(this.accountListView_SelectedIndexChanged);
+            this.accountListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.accountListView_MouseClick);
+            // 
+            // accountColumn
+            // 
+            this.accountColumn.Text = "Account";
+            this.accountColumn.Width = 200;
+            // 
+            // balanceColumn
+            // 
+            this.balanceColumn.Text = "Balance";
+            this.balanceColumn.Width = 88;
+            // 
             // databaseOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 600);
+            this.ClientSize = new System.Drawing.Size(292, 461);
+            this.Controls.Add(this.accountListView);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.syncBtn);
             this.Controls.Add(this.monthBackBtn);
@@ -233,7 +205,6 @@ namespace MoneyUI
             this.Controls.Add(this.monthLabel);
             this.Controls.Add(this.settingsBtn);
             this.Controls.Add(this.addAccountBtn);
-            this.Controls.Add(this.accountListView);
             this.Name = "databaseOverview";
             this.Text = "Database Overview";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.databaseOverview_FormClosing);
@@ -246,18 +217,18 @@ namespace MoneyUI
         }
 
         #endregion
-        private MaterialSkin.Controls.MaterialFlatButton addAccountBtn;
-        private MaterialSkin.Controls.MaterialFlatButton settingsBtn;
-        private MaterialSkin.Controls.MaterialListView accountListView;
-        private System.Windows.Forms.ColumnHeader accountName;
-        private System.Windows.Forms.ColumnHeader accountBalance;
+        private System.Windows.Forms.Button addAccountBtn;
+        private System.Windows.Forms.Button settingsBtn;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.Timer uiChecker;
-        private MaterialSkin.Controls.MaterialFlatButton monthBackBtn;
-        private MaterialSkin.Controls.MaterialFlatButton monthForwardBtn;
-        private MaterialSkin.Controls.MaterialLabel monthLabel;
-        private MaterialSkin.Controls.MaterialFlatButton syncBtn;
+        private System.Windows.Forms.Button monthBackBtn;
+        private System.Windows.Forms.Button monthForwardBtn;
+        private System.Windows.Forms.Label monthLabel;
+        private System.Windows.Forms.Button syncBtn;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.ListView accountListView;
+        private System.Windows.Forms.ColumnHeader accountColumn;
+        private System.Windows.Forms.ColumnHeader balanceColumn;
     }
 }

@@ -11,15 +11,13 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
 using Money;
 using Newtonsoft.Json;
 using WebDav;
 
 namespace MoneyUI
 {
-    public partial class databaseOverview : MaterialForm
+    public partial class databaseOverview : Form
     {
         public Database db;
         public string dbPath;
@@ -51,7 +49,7 @@ namespace MoneyUI
             monthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
 
             ImageList imgs = new ImageList();
-            imgs.ImageSize = new Size(48, 64);
+            imgs.ImageSize = new Size(64, 48);
 
             //LOAD IMGS FROM FILE. SPECIFY YOUR PATH FOR IMAGES
             String[] paths = { };
@@ -69,22 +67,6 @@ namespace MoneyUI
 
             //BIND IMGS TO LISTVIEW
             accountListView.SmallImageList = imgs;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
 
             this.Text = db.name;
 
@@ -186,12 +168,6 @@ namespace MoneyUI
                 UpdateGUI();
                 ao.shouldUpdate = false;
             }
-        }
-
-        private void accountListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (accountListView.SelectedItems.Count > 0)
-                ao.ac = db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag);
         }
 
         private void monthLabel_Click(object sender, EventArgs e)
@@ -381,6 +357,12 @@ namespace MoneyUI
             });
 
             t.Start();
+        }
+
+        private void accountListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (accountListView.SelectedItems.Count > 0)
+                ao.ac = db.accounts.IndexOf((Account)accountListView.SelectedItems[0].Tag);
         }
     }
 }

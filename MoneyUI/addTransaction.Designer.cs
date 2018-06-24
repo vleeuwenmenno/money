@@ -28,43 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cancelBtn = new MaterialSkin.Controls.MaterialFlatButton();
-            this.addTransactionBtn = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.cancelBtn = new System.Windows.Forms.Button();
+            this.addTransactionBtn = new System.Windows.Forms.Button();
             this.transactionAmountI = new System.Windows.Forms.NumericUpDown();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel3 = new System.Windows.Forms.Label();
+            this.materialLabel1 = new System.Windows.Forms.Label();
+            this.materialLabel2 = new System.Windows.Forms.Label();
             this.transactionDateI = new System.Windows.Forms.DateTimePicker();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
-            this.transactionDescI = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.transactionDescLabel = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel4 = new System.Windows.Forms.Label();
+            this.transactionDescI = new System.Windows.Forms.TextBox();
+            this.transactionDescLabel = new System.Windows.Forms.Label();
             this.transactionAccountI = new ComboxExtended.ImagedComboBox();
-            this.payeeSelectBtnI = new MaterialSkin.Controls.MaterialFlatButton();
-            this.transactionPayeeI = new MaterialSkin.Controls.MaterialLabel();
-            this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
-            this.materialTabControl1 = new MaterialSkin.Controls.MaterialTabControl();
+            this.payeeSelectBtnI = new System.Windows.Forms.Button();
+            this.transactionPayeeI = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.currencySelectorI = new System.Windows.Forms.ComboBox();
+            this.materialLabel5 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            this.currencySelectorE = new System.Windows.Forms.ComboBox();
+            this.materialLabel6 = new System.Windows.Forms.Label();
+            this.materialLabel7 = new System.Windows.Forms.Label();
             this.transactionAmountE = new System.Windows.Forms.NumericUpDown();
             this.transactionDateE = new System.Windows.Forms.DateTimePicker();
-            this.transactionPayeeE = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel11 = new MaterialSkin.Controls.MaterialLabel();
+            this.transactionPayeeE = new System.Windows.Forms.Label();
+            this.materialLabel11 = new System.Windows.Forms.Label();
             this.transactionAccountE = new ComboxExtended.ImagedComboBox();
-            this.materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
-            this.transactionPayeeBtnE = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            this.transactionDescE = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.currencySelectorI = new System.Windows.Forms.ComboBox();
-            this.materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            this.currencySelectorE = new System.Windows.Forms.ComboBox();
-            this.materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabel10 = new System.Windows.Forms.Label();
+            this.transactionPayeeBtnE = new System.Windows.Forms.Button();
+            this.materialLabel9 = new System.Windows.Forms.Label();
+            this.materialLabel8 = new System.Windows.Forms.Label();
+            this.transactionDescE = new System.Windows.Forms.TextBox();
+            this.materialTabControl1 = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.transactionAmountI)).BeginInit();
-            this.materialTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transactionAmountE)).BeginInit();
+            this.materialTabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelBtn
@@ -72,14 +71,10 @@
             this.cancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelBtn.AutoSize = true;
             this.cancelBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.cancelBtn.Depth = 0;
-            this.cancelBtn.Icon = null;
-            this.cancelBtn.Location = new System.Drawing.Point(208, 490);
+            this.cancelBtn.Location = new System.Drawing.Point(232, 370);
             this.cancelBtn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.cancelBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Primary = false;
-            this.cancelBtn.Size = new System.Drawing.Size(73, 36);
+            this.cancelBtn.Size = new System.Drawing.Size(50, 23);
             this.cancelBtn.TabIndex = 6;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
@@ -90,13 +85,9 @@
             this.addTransactionBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.addTransactionBtn.AutoSize = true;
             this.addTransactionBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.addTransactionBtn.Depth = 0;
-            this.addTransactionBtn.Icon = null;
-            this.addTransactionBtn.Location = new System.Drawing.Point(12, 490);
-            this.addTransactionBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.addTransactionBtn.Location = new System.Drawing.Point(12, 373);
             this.addTransactionBtn.Name = "addTransactionBtn";
-            this.addTransactionBtn.Primary = true;
-            this.addTransactionBtn.Size = new System.Drawing.Size(145, 36);
+            this.addTransactionBtn.Size = new System.Drawing.Size(95, 23);
             this.addTransactionBtn.TabIndex = 5;
             this.addTransactionBtn.Text = "Add Transaction";
             this.addTransactionBtn.UseVisualStyleBackColor = true;
@@ -119,45 +110,36 @@
             0,
             0});
             this.transactionAmountI.Name = "transactionAmountI";
-            this.transactionAmountI.Size = new System.Drawing.Size(265, 20);
+            this.transactionAmountI.Size = new System.Drawing.Size(267, 20);
             this.transactionAmountI.TabIndex = 1;
             // 
             // materialLabel3
             // 
             this.materialLabel3.AutoSize = true;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.Location = new System.Drawing.Point(6, 3);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel3.Size = new System.Drawing.Size(47, 13);
             this.materialLabel3.TabIndex = 8;
             this.materialLabel3.Text = "Account";
             // 
             // materialLabel1
             // 
             this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel1.Location = new System.Drawing.Point(6, 112);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(62, 19);
+            this.materialLabel1.Size = new System.Drawing.Size(43, 13);
             this.materialLabel1.TabIndex = 8;
             this.materialLabel1.Text = "Amount";
             // 
             // materialLabel2
             // 
             this.materialLabel2.AutoSize = true;
-            this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel2.Location = new System.Drawing.Point(6, 205);
-            this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(49, 19);
+            this.materialLabel2.Size = new System.Drawing.Size(37, 13);
             this.materialLabel2.TabIndex = 8;
             this.materialLabel2.Text = "Payee";
             // 
@@ -171,13 +153,10 @@
             // materialLabel4
             // 
             this.materialLabel4.AutoSize = true;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel4.Location = new System.Drawing.Point(6, 251);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(40, 19);
+            this.materialLabel4.Size = new System.Drawing.Size(30, 13);
             this.materialLabel4.TabIndex = 8;
             this.materialLabel4.Text = "Date";
             // 
@@ -185,31 +164,19 @@
             // 
             this.transactionDescI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.transactionDescI.Depth = 0;
-            this.transactionDescI.Hint = "";
             this.transactionDescI.Location = new System.Drawing.Point(10, 179);
-            this.transactionDescI.MaxLength = 32767;
-            this.transactionDescI.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionDescI.Name = "transactionDescI";
-            this.transactionDescI.PasswordChar = '\0';
-            this.transactionDescI.SelectedText = "";
-            this.transactionDescI.SelectionLength = 0;
-            this.transactionDescI.SelectionStart = 0;
-            this.transactionDescI.Size = new System.Drawing.Size(265, 23);
+            this.transactionDescI.Size = new System.Drawing.Size(267, 20);
             this.transactionDescI.TabIndex = 2;
             this.transactionDescI.TabStop = false;
-            this.transactionDescI.UseSystemPasswordChar = false;
             // 
             // transactionDescLabel
             // 
             this.transactionDescLabel.AutoSize = true;
-            this.transactionDescLabel.Depth = 0;
-            this.transactionDescLabel.Font = new System.Drawing.Font("Roboto", 11F);
             this.transactionDescLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.transactionDescLabel.Location = new System.Drawing.Point(6, 157);
-            this.transactionDescLabel.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionDescLabel.Name = "transactionDescLabel";
-            this.transactionDescLabel.Size = new System.Drawing.Size(86, 19);
+            this.transactionDescLabel.Size = new System.Drawing.Size(60, 13);
             this.transactionDescLabel.TabIndex = 11;
             this.transactionDescLabel.Text = "Description";
             // 
@@ -224,21 +191,17 @@
             this.transactionAccountI.ItemHeight = 32;
             this.transactionAccountI.Location = new System.Drawing.Point(10, 25);
             this.transactionAccountI.Name = "transactionAccountI";
-            this.transactionAccountI.Size = new System.Drawing.Size(265, 38);
+            this.transactionAccountI.Size = new System.Drawing.Size(267, 38);
             this.transactionAccountI.TabIndex = 0;
             // 
             // payeeSelectBtnI
             // 
             this.payeeSelectBtnI.AutoSize = true;
             this.payeeSelectBtnI.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.payeeSelectBtnI.Depth = 0;
-            this.payeeSelectBtnI.Icon = null;
             this.payeeSelectBtnI.Location = new System.Drawing.Point(246, 216);
             this.payeeSelectBtnI.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.payeeSelectBtnI.MouseState = MaterialSkin.MouseState.HOVER;
             this.payeeSelectBtnI.Name = "payeeSelectBtnI";
-            this.payeeSelectBtnI.Primary = false;
-            this.payeeSelectBtnI.Size = new System.Drawing.Size(29, 36);
+            this.payeeSelectBtnI.Size = new System.Drawing.Size(23, 23);
             this.payeeSelectBtnI.TabIndex = 12;
             this.payeeSelectBtnI.Text = "+";
             this.payeeSelectBtnI.UseVisualStyleBackColor = true;
@@ -247,43 +210,12 @@
             // transactionPayeeI
             // 
             this.transactionPayeeI.AutoSize = true;
-            this.transactionPayeeI.Depth = 0;
-            this.transactionPayeeI.Font = new System.Drawing.Font("Roboto", 11F);
             this.transactionPayeeI.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.transactionPayeeI.Location = new System.Drawing.Point(19, 224);
-            this.transactionPayeeI.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionPayeeI.Name = "transactionPayeeI";
-            this.transactionPayeeI.Size = new System.Drawing.Size(133, 19);
+            this.transactionPayeeI.Size = new System.Drawing.Size(96, 13);
             this.transactionPayeeI.TabIndex = 13;
             this.transactionPayeeI.Text = "No payee selected";
-            // 
-            // materialTabSelector1
-            // 
-            this.materialTabSelector1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialTabSelector1.BaseTabControl = this.materialTabControl1;
-            this.materialTabSelector1.Depth = 0;
-            this.materialTabSelector1.Location = new System.Drawing.Point(0, 64);
-            this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabSelector1.Name = "materialTabSelector1";
-            this.materialTabSelector1.Size = new System.Drawing.Size(295, 48);
-            this.materialTabSelector1.TabIndex = 14;
-            this.materialTabSelector1.Text = "materialTabSelector1";
-            // 
-            // materialTabControl1
-            // 
-            this.materialTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialTabControl1.Controls.Add(this.tabPage1);
-            this.materialTabControl1.Controls.Add(this.tabPage2);
-            this.materialTabControl1.Depth = 0;
-            this.materialTabControl1.Location = new System.Drawing.Point(1, 118);
-            this.materialTabControl1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialTabControl1.Name = "materialTabControl1";
-            this.materialTabControl1.SelectedIndex = 0;
-            this.materialTabControl1.Size = new System.Drawing.Size(293, 363);
-            this.materialTabControl1.TabIndex = 15;
             // 
             // tabPage1
             // 
@@ -304,9 +236,29 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(285, 337);
+            this.tabPage1.Size = new System.Drawing.Size(287, 338);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Income";
+            // 
+            // currencySelectorI
+            // 
+            this.currencySelectorI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.currencySelectorI.FormattingEnabled = true;
+            this.currencySelectorI.Location = new System.Drawing.Point(10, 88);
+            this.currencySelectorI.Name = "currencySelectorI";
+            this.currencySelectorI.Size = new System.Drawing.Size(267, 21);
+            this.currencySelectorI.TabIndex = 14;
+            // 
+            // materialLabel5
+            // 
+            this.materialLabel5.AutoSize = true;
+            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel5.Location = new System.Drawing.Point(6, 66);
+            this.materialLabel5.Name = "materialLabel5";
+            this.materialLabel5.Size = new System.Drawing.Size(49, 13);
+            this.materialLabel5.TabIndex = 8;
+            this.materialLabel5.Text = "Currency";
             // 
             // tabPage2
             // 
@@ -327,22 +279,39 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(285, 337);
+            this.tabPage2.Size = new System.Drawing.Size(287, 338);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Expense";
+            // 
+            // currencySelectorE
+            // 
+            this.currencySelectorE.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.currencySelectorE.FormattingEnabled = true;
+            this.currencySelectorE.Location = new System.Drawing.Point(10, 88);
+            this.currencySelectorE.Name = "currencySelectorE";
+            this.currencySelectorE.Size = new System.Drawing.Size(267, 21);
+            this.currencySelectorE.TabIndex = 17;
             // 
             // materialLabel6
             // 
             this.materialLabel6.AutoSize = true;
-            this.materialLabel6.Depth = 0;
-            this.materialLabel6.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel6.Location = new System.Drawing.Point(6, 3);
-            this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
-            this.materialLabel6.Size = new System.Drawing.Size(65, 19);
+            this.materialLabel6.Size = new System.Drawing.Size(47, 13);
             this.materialLabel6.TabIndex = 20;
             this.materialLabel6.Text = "Account";
+            // 
+            // materialLabel7
+            // 
+            this.materialLabel7.AutoSize = true;
+            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel7.Location = new System.Drawing.Point(6, 66);
+            this.materialLabel7.Name = "materialLabel7";
+            this.materialLabel7.Size = new System.Drawing.Size(49, 13);
+            this.materialLabel7.TabIndex = 16;
+            this.materialLabel7.Text = "Currency";
             // 
             // transactionAmountE
             // 
@@ -366,7 +335,7 @@
             0,
             -2147483648});
             this.transactionAmountE.Name = "transactionAmountE";
-            this.transactionAmountE.Size = new System.Drawing.Size(265, 20);
+            this.transactionAmountE.Size = new System.Drawing.Size(267, 20);
             this.transactionAmountE.TabIndex = 17;
             this.transactionAmountE.ValueChanged += new System.EventHandler(this.transactionAmountE_ValueChanged);
             // 
@@ -380,26 +349,20 @@
             // transactionPayeeE
             // 
             this.transactionPayeeE.AutoSize = true;
-            this.transactionPayeeE.Depth = 0;
-            this.transactionPayeeE.Font = new System.Drawing.Font("Roboto", 11F);
             this.transactionPayeeE.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.transactionPayeeE.Location = new System.Drawing.Point(19, 224);
-            this.transactionPayeeE.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionPayeeE.Name = "transactionPayeeE";
-            this.transactionPayeeE.Size = new System.Drawing.Size(133, 19);
+            this.transactionPayeeE.Size = new System.Drawing.Size(96, 13);
             this.transactionPayeeE.TabIndex = 26;
             this.transactionPayeeE.Text = "No payee selected";
             // 
             // materialLabel11
             // 
             this.materialLabel11.AutoSize = true;
-            this.materialLabel11.Depth = 0;
-            this.materialLabel11.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel11.Location = new System.Drawing.Point(6, 251);
-            this.materialLabel11.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel11.Name = "materialLabel11";
-            this.materialLabel11.Size = new System.Drawing.Size(40, 19);
+            this.materialLabel11.Size = new System.Drawing.Size(30, 13);
             this.materialLabel11.TabIndex = 23;
             this.materialLabel11.Text = "Date";
             // 
@@ -414,19 +377,16 @@
             this.transactionAccountE.ItemHeight = 32;
             this.transactionAccountE.Location = new System.Drawing.Point(10, 25);
             this.transactionAccountE.Name = "transactionAccountE";
-            this.transactionAccountE.Size = new System.Drawing.Size(265, 38);
+            this.transactionAccountE.Size = new System.Drawing.Size(267, 38);
             this.transactionAccountE.TabIndex = 16;
             // 
             // materialLabel10
             // 
             this.materialLabel10.AutoSize = true;
-            this.materialLabel10.Depth = 0;
-            this.materialLabel10.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel10.Location = new System.Drawing.Point(6, 157);
-            this.materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel10.Name = "materialLabel10";
-            this.materialLabel10.Size = new System.Drawing.Size(86, 19);
+            this.materialLabel10.Size = new System.Drawing.Size(60, 13);
             this.materialLabel10.TabIndex = 24;
             this.materialLabel10.Text = "Description";
             // 
@@ -434,14 +394,10 @@
             // 
             this.transactionPayeeBtnE.AutoSize = true;
             this.transactionPayeeBtnE.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.transactionPayeeBtnE.Depth = 0;
-            this.transactionPayeeBtnE.Icon = null;
             this.transactionPayeeBtnE.Location = new System.Drawing.Point(246, 216);
             this.transactionPayeeBtnE.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.transactionPayeeBtnE.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionPayeeBtnE.Name = "transactionPayeeBtnE";
-            this.transactionPayeeBtnE.Primary = false;
-            this.transactionPayeeBtnE.Size = new System.Drawing.Size(29, 36);
+            this.transactionPayeeBtnE.Size = new System.Drawing.Size(23, 23);
             this.transactionPayeeBtnE.TabIndex = 25;
             this.transactionPayeeBtnE.Text = "+";
             this.transactionPayeeBtnE.UseVisualStyleBackColor = true;
@@ -450,26 +406,20 @@
             // materialLabel9
             // 
             this.materialLabel9.AutoSize = true;
-            this.materialLabel9.Depth = 0;
-            this.materialLabel9.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel9.Location = new System.Drawing.Point(6, 205);
-            this.materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel9.Name = "materialLabel9";
-            this.materialLabel9.Size = new System.Drawing.Size(49, 19);
+            this.materialLabel9.Size = new System.Drawing.Size(37, 13);
             this.materialLabel9.TabIndex = 22;
             this.materialLabel9.Text = "Payee";
             // 
             // materialLabel8
             // 
             this.materialLabel8.AutoSize = true;
-            this.materialLabel8.Depth = 0;
-            this.materialLabel8.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel8.Location = new System.Drawing.Point(6, 112);
-            this.materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel8.Name = "materialLabel8";
-            this.materialLabel8.Size = new System.Drawing.Size(62, 19);
+            this.materialLabel8.Size = new System.Drawing.Size(43, 13);
             this.materialLabel8.TabIndex = 21;
             this.materialLabel8.Text = "Amount";
             // 
@@ -477,74 +427,29 @@
             // 
             this.transactionDescE.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.transactionDescE.Depth = 0;
-            this.transactionDescE.Hint = "";
             this.transactionDescE.Location = new System.Drawing.Point(10, 179);
-            this.transactionDescE.MaxLength = 32767;
-            this.transactionDescE.MouseState = MaterialSkin.MouseState.HOVER;
             this.transactionDescE.Name = "transactionDescE";
-            this.transactionDescE.PasswordChar = '\0';
-            this.transactionDescE.SelectedText = "";
-            this.transactionDescE.SelectionLength = 0;
-            this.transactionDescE.SelectionStart = 0;
-            this.transactionDescE.Size = new System.Drawing.Size(265, 23);
+            this.transactionDescE.Size = new System.Drawing.Size(267, 20);
             this.transactionDescE.TabIndex = 18;
             this.transactionDescE.TabStop = false;
-            this.transactionDescE.UseSystemPasswordChar = false;
             // 
-            // currencySelectorI
+            // materialTabControl1
             // 
-            this.currencySelectorI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.currencySelectorI.FormattingEnabled = true;
-            this.currencySelectorI.Location = new System.Drawing.Point(10, 88);
-            this.currencySelectorI.Name = "currencySelectorI";
-            this.currencySelectorI.Size = new System.Drawing.Size(265, 21);
-            this.currencySelectorI.TabIndex = 14;
-            // 
-            // materialLabel5
-            // 
-            this.materialLabel5.AutoSize = true;
-            this.materialLabel5.Depth = 0;
-            this.materialLabel5.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel5.Location = new System.Drawing.Point(6, 66);
-            this.materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel5.Name = "materialLabel5";
-            this.materialLabel5.Size = new System.Drawing.Size(68, 19);
-            this.materialLabel5.TabIndex = 8;
-            this.materialLabel5.Text = "Currency";
-            // 
-            // currencySelectorE
-            // 
-            this.currencySelectorE.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.currencySelectorE.FormattingEnabled = true;
-            this.currencySelectorE.Location = new System.Drawing.Point(10, 88);
-            this.currencySelectorE.Name = "currencySelectorE";
-            this.currencySelectorE.Size = new System.Drawing.Size(265, 21);
-            this.currencySelectorE.TabIndex = 17;
-            // 
-            // materialLabel7
-            // 
-            this.materialLabel7.AutoSize = true;
-            this.materialLabel7.Depth = 0;
-            this.materialLabel7.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel7.Location = new System.Drawing.Point(6, 66);
-            this.materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel7.Name = "materialLabel7";
-            this.materialLabel7.Size = new System.Drawing.Size(68, 19);
-            this.materialLabel7.TabIndex = 16;
-            this.materialLabel7.Text = "Currency";
+            this.materialTabControl1.Controls.Add(this.tabPage1);
+            this.materialTabControl1.Controls.Add(this.tabPage2);
+            this.materialTabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.materialTabControl1.Location = new System.Drawing.Point(0, 0);
+            this.materialTabControl1.Name = "materialTabControl1";
+            this.materialTabControl1.SelectedIndex = 0;
+            this.materialTabControl1.Size = new System.Drawing.Size(295, 364);
+            this.materialTabControl1.TabIndex = 15;
             // 
             // addTransaction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(295, 541);
+            this.ClientSize = new System.Drawing.Size(295, 408);
             this.Controls.Add(this.materialTabControl1);
-            this.Controls.Add(this.materialTabSelector1);
             this.Controls.Add(this.addTransactionBtn);
             this.Controls.Add(this.cancelBtn);
             this.Name = "addTransaction";
@@ -552,12 +457,12 @@
             this.Text = "Add Transaction";
             this.Load += new System.EventHandler(this.addTransaction_Load);
             ((System.ComponentModel.ISupportInitialize)(this.transactionAmountI)).EndInit();
-            this.materialTabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transactionAmountE)).EndInit();
+            this.materialTabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -565,37 +470,36 @@
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialFlatButton cancelBtn;
-        private MaterialSkin.Controls.MaterialRaisedButton addTransactionBtn;
+        private System.Windows.Forms.Button cancelBtn;
+        private System.Windows.Forms.Button addTransactionBtn;
         private System.Windows.Forms.NumericUpDown transactionAmountI;
         private ComboxExtended.ImagedComboBox transactionAccountI;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
-        private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialLabel materialLabel2;
+        private System.Windows.Forms.Label materialLabel3;
+        private System.Windows.Forms.Label materialLabel1;
+        private System.Windows.Forms.Label materialLabel2;
         private System.Windows.Forms.DateTimePicker transactionDateI;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
-        private MaterialSkin.Controls.MaterialSingleLineTextField transactionDescI;
-        private MaterialSkin.Controls.MaterialLabel transactionDescLabel;
-        private MaterialSkin.Controls.MaterialFlatButton payeeSelectBtnI;
-        private MaterialSkin.Controls.MaterialLabel transactionPayeeI;
-        private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
-        private MaterialSkin.Controls.MaterialTabControl materialTabControl1;
+        private System.Windows.Forms.Label materialLabel4;
+        private System.Windows.Forms.TextBox transactionDescI;
+        private System.Windows.Forms.Label transactionDescLabel;
+        private System.Windows.Forms.Button payeeSelectBtnI;
+        private System.Windows.Forms.Label transactionPayeeI;
+        private System.Windows.Forms.TabControl materialTabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel6;
+        private System.Windows.Forms.Label materialLabel6;
         private System.Windows.Forms.NumericUpDown transactionAmountE;
         private System.Windows.Forms.DateTimePicker transactionDateE;
-        private MaterialSkin.Controls.MaterialLabel transactionPayeeE;
-        private MaterialSkin.Controls.MaterialLabel materialLabel11;
+        private System.Windows.Forms.Label transactionPayeeE;
+        private System.Windows.Forms.Label materialLabel11;
         private ComboxExtended.ImagedComboBox transactionAccountE;
-        private MaterialSkin.Controls.MaterialLabel materialLabel10;
-        private MaterialSkin.Controls.MaterialFlatButton transactionPayeeBtnE;
-        private MaterialSkin.Controls.MaterialLabel materialLabel9;
-        private MaterialSkin.Controls.MaterialLabel materialLabel8;
-        private MaterialSkin.Controls.MaterialSingleLineTextField transactionDescE;
+        private System.Windows.Forms.Label materialLabel10;
+        private System.Windows.Forms.Button transactionPayeeBtnE;
+        private System.Windows.Forms.Label materialLabel9;
+        private System.Windows.Forms.Label materialLabel8;
+        private System.Windows.Forms.TextBox transactionDescE;
         private System.Windows.Forms.ComboBox currencySelectorI;
-        private MaterialSkin.Controls.MaterialLabel materialLabel5;
+        private System.Windows.Forms.Label materialLabel5;
         private System.Windows.Forms.ComboBox currencySelectorE;
-        private MaterialSkin.Controls.MaterialLabel materialLabel7;
+        private System.Windows.Forms.Label materialLabel7;
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using MaterialSkin.Controls;
-using MaterialSkin;
 using Money;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -8,7 +6,7 @@ using System.Drawing;
 
 namespace MoneyUI
 {
-    public partial class accountOverview : MaterialForm
+    public partial class accountOverview : Form
     {
         public Database db;
 
@@ -21,6 +19,15 @@ namespace MoneyUI
         public bool shouldUpdateHere = false;
 
         public databaseOverview parent;
+        private ListViewItem transactionHistoryItem;
+
+        private ListViewItem GetItemFromPoint(ListView listView, Point mousePosition)
+        {
+            // translate the mouse position from screen coordinates to 
+            // client coordinates within the given ListView
+            Point localPoint = listView.PointToClient(mousePosition);
+            return listView.GetItemAt(localPoint.X, localPoint.Y);
+        }
 
         public accountOverview(Database db, int account, string dbPath, databaseOverview parent)
         {
@@ -30,22 +37,6 @@ namespace MoneyUI
             this.db = db;
             this.dbPath = dbPath;
             this.ac = account;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         private void accountOverview_Load(object sender, EventArgs e)
@@ -72,8 +63,8 @@ namespace MoneyUI
                     acNumLabel.Text = (db.accounts[ac].accountNumber);
 
                 //Move labels to make sure they fit inside the form (Because we updated the text)
-                acNumLabel.Location = new System.Drawing.Point(this.Size.Width - acNumLabel.Size.Width - 8, acNumLabel.Location.Y);
-                currentBalance.Location = new System.Drawing.Point(this.Size.Width - currentBalance.Size.Width - 8, currentBalance.Location.Y);
+                acNumLabel.Location = new System.Drawing.Point(this.Size.Width - acNumLabel.Size.Width - 24, acNumLabel.Location.Y);
+                currentBalance.Location = new System.Drawing.Point(this.Size.Width - currentBalance.Size.Width - 24, currentBalance.Location.Y);
 
                 //Populate transaction history list
                 transactionHistory.Items.Clear();
@@ -98,10 +89,40 @@ namespace MoneyUI
                                 transactionHistory.Items.Add(item);
                             }
                     }
-
+                
+                transactionsScheduled_Resize(transactionsScheduled, null);
+                transactionHistory_Resize(transactionHistory, null);
                 shouldUpdate = true;
             }
         }
+
+        #region Resize handlers
+
+        private void transactionsScheduled_Resize(object sender, EventArgs e)
+        {
+            ListView lv = (ListView)sender;
+            int x = lv.Width / 17 == 0 ? 1 : lv.Width / 17;
+            lv.Columns[0].Width = x * 6;
+            lv.Columns[1].Width = x * 2;
+            lv.Columns[2].Width = x * 3;
+            lv.Columns[3].Width = int.Parse(Math.Round(x * 4f, 0).ToString());
+            lv.Columns[4].Width = int.Parse(Math.Round(x * 2.2f, 0).ToString());
+        }
+
+        private void transactionHistory_Resize(object sender, EventArgs e)
+        {
+            ListView lv = (ListView)sender;
+            int x = lv.Width / 14 == 0 ? 1 : lv.Width / 14;
+            lv.Columns[0].Width = x * 2;
+            lv.Columns[1].Width = x * 6;
+            lv.Columns[2].Width = x * 2;
+            lv.Columns[3].Width = x * 2;
+            lv.Columns[4].Width = x * 2;
+        }
+
+        #endregion
+
+        #region Click handlers
 
         private void addTransactionBtn_Click(object sender, EventArgs e)
         {
@@ -114,61 +135,6 @@ namespace MoneyUI
 
             UpdateGUI();
         }
-
-        private void upcomingTransactions_Resize(object sender, EventArgs e)
-        {
-            SizeLastColumn((ListView)sender);
-        }
-
-        private void SizeLastColumn(ListView lv)
-        {
-            int x = lv.Width / 15 == 0 ? 1 : lv.Width / 15;
-            lv.Columns[0].Width = x * 5;
-            lv.Columns[1].Width = x * 3;
-            lv.Columns[2].Width = int.Parse(Math.Round(x * 2.5f, 0).ToString());
-            lv.Columns[3].Width = int.Parse(Math.Round(x * 2.5f, 0).ToString());
-            lv.Columns[4].Width = int.Parse(Math.Round(x * 2.2f, 0).ToString());
-        }
-
-        private void SizeLastColumnEx(ListView lv)
-        {
-            int x = lv.Width / 17 == 0 ? 1 : lv.Width / 17;
-            lv.Columns[0].Width = x * 2;
-            lv.Columns[1].Width = x * 6;
-            lv.Columns[2].Width = x * 2;
-            lv.Columns[3].Width = int.Parse(Math.Round(x * 4f, 0).ToString());
-            lv.Columns[4].Width = int.Parse(Math.Round(x * 3.2f, 0).ToString());
-        }
-
-        private void materialListView2_Resize(object sender, EventArgs e)
-        {
-            SizeLastColumnEx((ListView)sender);
-        }
-
-        private void materialListView3_Resize(object sender, EventArgs e)
-        {
-            SizeLastColumnEx((ListView)sender);
-        }
-
-        private void uiChecker_Tick(object sender, EventArgs e)
-        {
-            if (ac != vac || shouldUpdateHere)
-            {
-                vac = ac;
-                UpdateGUI();
-                shouldUpdateHere = false;
-            }
-        }
-
-        private ListViewItem GetItemFromPoint(ListView listView, Point mousePosition)
-        {
-            // translate the mouse position from screen coordinates to 
-            // client coordinates within the given ListView
-            Point localPoint = listView.PointToClient(mousePosition);
-            return listView.GetItemAt(localPoint.X, localPoint.Y);
-        }
-
-        ListViewItem transactionHistoryItem;
 
         private void transactionHistory_MouseClick(object sender, MouseEventArgs e)
         {
@@ -234,7 +200,7 @@ namespace MoneyUI
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,7 +209,7 @@ namespace MoneyUI
 
             if (r == DialogResult.Yes)
             {
-                for(int i = 0; i < db.accounts[ac].transactions.Count; i++)
+                for (int i = 0; i < db.accounts[ac].transactions.Count; i++)
                 {
                     Transaction t = db.accounts[ac].transactions[i];
                     if (t.id == ((Guid)transactionHistoryItem.Tag))
@@ -251,7 +217,7 @@ namespace MoneyUI
                         if (t.intern != Guid.Empty)
                         {
                             r = MessageBox.Show("The payee in this transaction is internal, do you want to delete the payee transaction too?", "Delete linked transaction?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            
+
                             if (r == DialogResult.Yes)
                             {
                                 int account = 0;
@@ -271,7 +237,7 @@ namespace MoneyUI
                                 else
                                     MessageBox.Show("Linked transaction could not be found, it's probably already gone.", "Not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
-                            else if (r== DialogResult.No)
+                            else if (r == DialogResult.No)
                             {
                                 int account = 0;
                                 Transaction internT = null;
@@ -336,15 +302,21 @@ namespace MoneyUI
             }
         }
 
-        private void transactionsScheduled_Resize(object sender, EventArgs e)
+        #endregion
+
+        private void uiChecker_Tick(object sender, EventArgs e)
         {
-            ListView lv = (ListView)sender;
-            int x = lv.Width / 17 == 0 ? 1 : lv.Width / 17;
-            lv.Columns[0].Width = x * 6;
-            lv.Columns[1].Width = x * 2;
-            lv.Columns[2].Width = x * 3;
-            lv.Columns[3].Width = int.Parse(Math.Round(x * 4f, 0).ToString());
-            lv.Columns[4].Width = int.Parse(Math.Round(x * 2.2f, 0).ToString());
+            if (ac != vac || shouldUpdateHere)
+            {
+                vac = ac;
+                UpdateGUI();
+                shouldUpdateHere = false;
+            }
+        }
+
+        private void accountOverview_TextChanged(object sender, EventArgs e)
+        {
+            accountNameLabel.Text = this.Text;
         }
     }
 }

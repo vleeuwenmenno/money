@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
 using Money;
 using ComboxExtended;
 using System.IO;
@@ -17,7 +15,7 @@ using System.Text.RegularExpressions;
 
 namespace MoneyUI
 {
-    public partial class newAccount : MaterialForm
+    public partial class newAccount : Form
     {
         public Database db;
         public string dbPath;
@@ -29,22 +27,6 @@ namespace MoneyUI
 
             this.db = db;
             this.dbPath = dbPath;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         public newAccount(Database db, int account, string dbPath)
@@ -65,22 +47,6 @@ namespace MoneyUI
 
             accountTypeCombo.Text = db.accounts[account].type;
             currencyTxt.Text = db.accounts[account].currencyISO4217;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
 
             ComboBoxItem item = new ComboBoxItem(db.accounts[ac].type, Image.FromFile(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/icons/" + db.accounts[ac].type.ToLower() + ".png"));
             accountTypeCombo.SelectedIndex = accountTypeCombo.Items.Add(item);

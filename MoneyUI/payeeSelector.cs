@@ -7,13 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MaterialSkin;
-using MaterialSkin.Controls;
 using Money;
 
 namespace MoneyUI
 {
-    public partial class payeeSelector : MaterialForm
+    public partial class payeeSelector : Form
     {
         public Database db;
         public int ac;
@@ -27,22 +25,6 @@ namespace MoneyUI
             this.db = db;
             this.dbPath = dbPath;
             this.ac = account;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         private void payeeSelector_Load(object sender, EventArgs e)

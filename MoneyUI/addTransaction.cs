@@ -1,6 +1,4 @@
-﻿using MaterialSkin.Controls;
-using MaterialSkin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +14,7 @@ using MoneyUI;
 
 namespace MoneyUI
 {
-    public partial class addTransaction : MaterialForm
+    public partial class addTransaction : Form
     {
         public Database db;
         public int ac;
@@ -29,22 +27,6 @@ namespace MoneyUI
             this.db = db;
             this.dbPath = dbPath;
             this.ac = account;
-
-            // Create a material theme manager and add the form to manage (this)
-            MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-
-            if (db.darkTheme)
-                materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
-            else
-                materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-
-            // Configure color schema
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.BlueGrey400, Primary.BlueGrey600,
-                Primary.BlueGrey600, Accent.LightBlue700,
-                TextShade.WHITE
-            );
         }
 
         private void addTransaction_Load(object sender, EventArgs e)
