@@ -68,8 +68,6 @@ namespace MoneyUI
                 {
                     acNumLabel.Text = (Creditcard.MaskDigits(db.accounts[ac].accountNumber));
                 }
-                else if (Tools.ValidateIBAN(db.accounts[ac].accountNumber))
-                    acNumLabel.Text = (Regex.Replace(db.accounts[ac].accountNumber, ".{4}", "$0 ").Trim());
                 else
                     acNumLabel.Text = (db.accounts[ac].accountNumber);
 
@@ -93,7 +91,7 @@ namespace MoneyUI
                                 item.SubItems.Add(t.payee); //payee
 
                                 if (t.currencyISO4217 != db.accounts[ac].currencyISO4217)
-                                    item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount) + "(" + db.accounts[ac].currencyISO4217 + " " + Math.Round(Tools.ConvertCurrency(t.exchangeSnapshot, t.currencyISO4217, db.accounts[ac].currencyISO4217, t.amount), 2) + ")"); //amount
+                                    item.SubItems.Add(db.accounts[ac].currencyISO4217 + " " + Math.Round(Tools.ConvertCurrency(t.exchangeSnapshot, t.currencyISO4217, db.accounts[ac].currencyISO4217, t.amount), 2) + "(" + t.currencyISO4217 + " " + String.Format("{0:n}", t.amount) + ")"); //amount
                                 else
                                     item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount)); //amount
 

@@ -97,8 +97,6 @@ namespace MoneyUI
                 {
                     s += (Creditcard.MaskDigits(ac.accountNumber));
                 }
-                else if (Tools.ValidateIBAN(ac.accountNumber))
-                    s += (Regex.Replace(ac.accountNumber, ".{4}", "$0 ").Trim());
                 else
                     s += (ac.accountNumber);
 

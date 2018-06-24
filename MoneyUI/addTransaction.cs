@@ -136,6 +136,8 @@ namespace MoneyUI
                 flip.dateTime = t.dateTime;
                 flip.type = t.type;
                 flip.status = t.status;
+                flip.exchangeSnapshot = t.exchangeSnapshot;
+                flip.currencyISO4217 = t.currencyISO4217;
 
                 t.intern = flip.id;
                 flip.intern = t.id;

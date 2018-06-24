@@ -97,9 +97,17 @@ namespace Money
         public static decimal ConvertCurrency(Dictionary<string, decimal> snapshot, string from, string to, decimal value)
         {
             //EURO > USD > THB
-            decimal valueUsd = (1m / snapshot[from]) * value;
-            decimal valueTo = snapshot[to] * valueUsd;
-            return valueTo;
+            if (from == "USD")
+            {
+                decimal valueUsd = snapshot[to] * value;
+                return valueUsd;
+            }
+            else
+            {
+                decimal valueUsd = (1m / snapshot[from]) * value;
+                decimal valueTo = snapshot[to] * valueUsd;
+                return valueTo;
+            }
         }
 
         public static Dictionary<string, decimal> ExchangeRateSnapshot()
