@@ -16,7 +16,7 @@ namespace Money
         public string accountNumber { get; set; }
         public string type { get; set; }
 
-        public char currencyChar { get; set; }
+        public string currencyISO4217 { get; set; }
         public List<Transaction> transactions { get; set; }
 
         public Transaction GetTransaction(Guid id)
@@ -30,7 +30,7 @@ namespace Money
 
         public Account()
         {
-            currencyChar = '€';
+            currencyISO4217 = "EUR";
             RecalculateBalance();
         }
 
@@ -52,7 +52,7 @@ namespace Money
 
         public Account(string accountName, string accountNumber)
         {
-            currencyChar = '€';
+            currencyISO4217 = "EUR";
             this.accountName = accountName;
             this.accountNumber = accountNumber;
 

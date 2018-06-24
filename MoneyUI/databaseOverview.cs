@@ -48,11 +48,7 @@ namespace MoneyUI
         private void UpdateGUI()
         {
             accountListView.Items.Clear();
-
-            if (monthToDisplay.Year == DateTime.Now.Year)
-                monthLabel.Text = monthToDisplay.ToString("MMMM");
-            else
-                monthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
+            monthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
 
             ImageList imgs = new ImageList();
             imgs.ImageSize = new Size(48, 64);
@@ -108,7 +104,7 @@ namespace MoneyUI
 
                 item.Text = s;
 
-                item.SubItems.Add(ac.currencyChar + " " + String.Format("{0:n}", ac.currentBalance));
+                item.SubItems.Add(ac.currencyISO4217 + " " + String.Format("{0:n}", ac.currentBalance));
                 item.Tag = ac;
 
                 accountListView.Items.Add(item);
@@ -168,7 +164,7 @@ namespace MoneyUI
         private void databaseOverview_Load(object sender, EventArgs e)
         {
             //Set current month label
-            monthLabel.Text = monthToDisplay.ToString("MMMM");
+            monthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
 
             //Check if syncing is enabled if so show the button
             if (db.syncWebDav)
@@ -204,18 +200,21 @@ namespace MoneyUI
         {
             monthToDisplay = DateTime.Now;
             UpdateGUI();
+            ao.shouldUpdateHere = true;
         }
 
         private void monthBackBtn_Click(object sender, EventArgs e)
         {
             monthToDisplay = monthToDisplay.AddMonths(-1);
             UpdateGUI();
+            ao.shouldUpdateHere = true;
         }
 
         private void monthForwardBtn_Click(object sender, EventArgs e)
         {
             monthToDisplay = monthToDisplay.AddMonths(1);
             UpdateGUI();
+            ao.shouldUpdateHere = true;
         }
 
         private void syncBtn_Click(object sender, EventArgs e)

@@ -18,6 +18,7 @@ namespace MoneyUI
         public string dbPath;
 
         public bool shouldUpdate = false;
+        public bool shouldUpdateHere = false;
 
         public databaseOverview parent;
 
@@ -58,7 +59,10 @@ namespace MoneyUI
             {
                 //Update labels
                 this.Text = db.accounts[ac].accountName + " overview";
-                currentBalance.Text = db.accounts[ac].currencyChar + " " + String.Format("{0:n}", db.accounts[ac].currentBalance);
+                currentBalance.Text = db.accounts[ac].currencyISO4217 + " " + String.Format("{0:n}", db.accounts[ac].currentBalance);
+
+                expectedEndBalanceLabel.Text = "End-balance at " + DateTime.DaysInMonth(parent.monthToDisplay.Year, parent.monthToDisplay.Month) + " " + parent.monthToDisplay.ToString("MMMM yyyy");
+                expectedEndBalance.Text = db.accounts[ac].currencyISO4217 + " " + String.Format("{0:n}", db.accounts[ac].currentBalance); //TODO: Calculate this
 
                 if (Tools.GetCardType(db.accounts[ac].accountNumber.Trim().Replace("-", "")) != CardType.Unknown)
                 {
@@ -72,23 +76,29 @@ namespace MoneyUI
                 //Move labels to make sure they fit inside the form (Because we updated the text)
                 acNumLabel.Location = new System.Drawing.Point(this.Size.Width - acNumLabel.Size.Width - 8, acNumLabel.Location.Y);
                 currentBalance.Location = new System.Drawing.Point(this.Size.Width - currentBalance.Size.Width - 8, currentBalance.Location.Y);
-                expectedEndBalance.Location = new System.Drawing.Point(this.Size.Width - expectedEndBalance.Size.Width - 8, expectedEndBalance.Location.Y);
-                expectedEndBalanceLabel.Location = new System.Drawing.Point(this.Size.Width - expectedEndBalanceLabel.Size.Width - 12 - expectedEndBalance.Size.Width, expectedEndBalanceLabel.Location.Y);
 
                 //Populate transaction history list
                 transactionHistory.Items.Clear();
                 if (db.accounts[ac].transactions != null)
                     foreach (Transaction t in db.accounts[ac].transactions)
                     {
-                        ListViewItem item = new ListViewItem(t.status.ToString()); //status
+                        if (t.dateTime.Year == parent.monthToDisplay.Year)
+                            if (t.dateTime.Month == parent.monthToDisplay.Month)
+                            {
+                                ListViewItem item = new ListViewItem(t.status.ToString()); //status
 
-                        item.Tag = t.id;
-                        item.SubItems.Add(t.desc); //desc
-                        item.SubItems.Add(t.dateTime.ToString("dd-MM-yyyy")); //date
-                        item.SubItems.Add(t.payee); //payee
-                        item.SubItems.Add(db.accounts[ac].currencyChar + " " + String.Format("{0:n}", t.amount)); //amount
+                                item.Tag = t.id;
+                                item.SubItems.Add(t.desc); //desc
+                                item.SubItems.Add(t.dateTime.ToString("dd-MM-yyyy")); //date
+                                item.SubItems.Add(t.payee); //payee
 
-                        transactionHistory.Items.Add(item);
+                                if (t.currencyISO4217 != db.accounts[ac].currencyISO4217)
+                                    item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount) + "(" + db.accounts[ac].currencyISO4217 + " WIP" + ")"); //amount
+                                else
+                                    item.SubItems.Add(t.currencyISO4217 + " " + String.Format("{0:n}", t.amount)); //amount
+
+                                transactionHistory.Items.Add(item);
+                            }
                     }
 
                 shouldUpdate = true;
@@ -126,10 +136,10 @@ namespace MoneyUI
         {
             int x = lv.Width / 17 == 0 ? 1 : lv.Width / 17;
             lv.Columns[0].Width = x * 2;
-            lv.Columns[1].Width = x * 7;
+            lv.Columns[1].Width = x * 6;
             lv.Columns[2].Width = x * 2;
             lv.Columns[3].Width = int.Parse(Math.Round(x * 4f, 0).ToString());
-            lv.Columns[4].Width = int.Parse(Math.Round(x * 2.2f, 0).ToString());
+            lv.Columns[4].Width = int.Parse(Math.Round(x * 3.2f, 0).ToString());
         }
 
         private void materialListView2_Resize(object sender, EventArgs e)
@@ -144,10 +154,11 @@ namespace MoneyUI
 
         private void uiChecker_Tick(object sender, EventArgs e)
         {
-            if (ac != vac)
+            if (ac != vac || shouldUpdateHere)
             {
                 vac = ac;
                 UpdateGUI();
+                shouldUpdateHere = false;
             }
         }
 
@@ -176,7 +187,10 @@ namespace MoneyUI
                         executeToolStripMenuItem.Enabled = false;
 
                     if (transactionHistoryItem.Text == "Scheduled")
+                    {
+                        executeToolStripMenuItem.Enabled = true;
                         skipToolStripMenuItem.Enabled = true;
+                    }
                     else
                         skipToolStripMenuItem.Enabled = false;
 
@@ -322,6 +336,17 @@ namespace MoneyUI
                     return;
                 }
             }
+        }
+
+        private void transactionsScheduled_Resize(object sender, EventArgs e)
+        {
+            ListView lv = (ListView)sender;
+            int x = lv.Width / 17 == 0 ? 1 : lv.Width / 17;
+            lv.Columns[0].Width = x * 6;
+            lv.Columns[1].Width = x * 2;
+            lv.Columns[2].Width = x * 3;
+            lv.Columns[3].Width = int.Parse(Math.Round(x * 4f, 0).ToString());
+            lv.Columns[4].Width = int.Parse(Math.Round(x * 2.2f, 0).ToString());
         }
     }
 }

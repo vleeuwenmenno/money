@@ -76,9 +76,12 @@ namespace MoneyUI
             Transaction t = new Transaction();
 
             t.id = Guid.NewGuid();
+            t.currencyISO4217 = db.accounts[ac].currencyISO4217;
 
-            if (db.accounts[db.AccountIdFromName(transactionAccountE.Text)].transactions == null)
-                db.accounts[db.AccountIdFromName(transactionAccountE.Text)].transactions = new List<Transaction>();
+            t.exchange = Tools.ExchangeRate(t.currencyISO4217);
+
+            if (db.accounts[ac].transactions == null)
+                db.accounts[ac].transactions = new List<Transaction>();
 
             if (materialTabControl1.SelectedTab.Text == "Expense")
             {
@@ -134,7 +137,7 @@ namespace MoneyUI
                 db.accounts[db.AccountIdFromName(payee)].transactions.Add(flip);
             }
 
-            db.accounts[db.AccountIdFromName(transactionAccountI.Text)].transactions.Add(t);
+            db.accounts[ac].transactions.Add(t);
             db.Save(dbPath);
             this.Close();
         }

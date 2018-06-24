@@ -64,7 +64,7 @@ namespace MoneyUI
             initialBalance.Enabled = false;
 
             accountTypeCombo.Text = db.accounts[account].type;
-            currencyTxt.Text = db.accounts[account].currencyChar.ToString();
+            currencyTxt.Text = db.accounts[account].currencyISO4217;
 
             // Create a material theme manager and add the form to manage (this)
             MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
@@ -102,7 +102,7 @@ namespace MoneyUI
             catch (Exception ex)
             { }
             
-            string[] currencySymbols = { "€ (EUR)", "$ (USD)", "£ (GBP)", "฿ (THB)" };
+            string[] currencySymbols = { "EUR", "USD", "GBP", "THB" };
             foreach (string c in currencySymbols)
                 currencyTxt.Items.Add(c);
         }
@@ -114,12 +114,27 @@ namespace MoneyUI
 
         private void continueBtn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(accountNumberTxt.Text))
+            {
+                MessageBox.Show("Cannot add account without account number! Please fill the account number input.", "No account number!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            foreach(Account ac in db.accounts)
+            {
+                if (ac.accountNumber == accountNumberTxt.Text)
+                {
+                    MessageBox.Show("There is already an account added with this account number! Make sure the account number is unique.", "Account number not unique!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
             if (this.Text != "Add account")
             {
                 db.accounts[ac].accountName = accountNameTxt.Text;
                 db.accounts[ac].accountNumber = accountNumberTxt.Text;
                 db.accounts[ac].initialBalance = initialBalance.Value;
-                db.accounts[ac].currencyChar = char.Parse(currencyTxt.Text.Substring(0, 1));
+                db.accounts[ac].currencyISO4217 = currencyTxt.Text;
                 db.accounts[ac].type = accountTypeCombo.Text.ToLower();
 
                 db.Save(dbPath);
@@ -132,7 +147,7 @@ namespace MoneyUI
                 ac.accountName = accountNameTxt.Text;
                 ac.accountNumber = accountNumberTxt.Text;
                 ac.initialBalance = initialBalance.Value;
-                ac.currencyChar = char.Parse(currencyTxt.Text.Substring(0, 1));
+                ac.currencyISO4217 = currencyTxt.Text;
                 ac.type = accountTypeCombo.Text.ToLower();
 
                 db.accounts.Add(ac);

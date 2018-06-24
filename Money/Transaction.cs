@@ -10,6 +10,10 @@ namespace Money
     {
         public decimal amount { get; set; }
 
+        public decimal exchange { get; set; } //USD/CURRENCY
+
+        public string currencyISO4217 { get; set; }
+
         public Guid id { get; set; }
 
         public Guid intern { get; set; }

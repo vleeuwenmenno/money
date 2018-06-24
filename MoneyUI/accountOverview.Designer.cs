@@ -41,12 +41,9 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addTransactionBtn = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.schTransactionTab = new System.Windows.Forms.TabPage();
             this.materialRaisedButton2 = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.transactionsScheduled = new MaterialSkin.Controls.MaterialListView();
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,6 +58,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.accountOverviewTabs.SuspendLayout();
             this.overviewTab.SuspendLayout();
             this.transactionHistoryTab.SuspendLayout();
@@ -103,12 +101,12 @@
             this.expectedEndBalance.Depth = 0;
             this.expectedEndBalance.Font = new System.Drawing.Font("Roboto", 11F);
             this.expectedEndBalance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.expectedEndBalance.Location = new System.Drawing.Point(169, 12);
+            this.expectedEndBalance.Location = new System.Drawing.Point(9, 31);
             this.expectedEndBalance.MouseState = MaterialSkin.MouseState.HOVER;
             this.expectedEndBalance.Name = "expectedEndBalance";
-            this.expectedEndBalance.Size = new System.Drawing.Size(57, 19);
+            this.expectedEndBalance.Size = new System.Drawing.Size(49, 19);
             this.expectedEndBalance.TabIndex = 3;
-            this.expectedEndBalance.Text = "€ 20.32";
+            this.expectedEndBalance.Text = "€ 0.00";
             // 
             // expectedEndBalanceLabel
             // 
@@ -128,7 +126,6 @@
             // 
             this.transactionHistoryTab.Controls.Add(this.transactionHistory);
             this.transactionHistoryTab.Controls.Add(this.addTransactionBtn);
-            this.transactionHistoryTab.Controls.Add(this.materialLabel3);
             this.transactionHistoryTab.Location = new System.Drawing.Point(4, 22);
             this.transactionHistoryTab.Name = "transactionHistoryTab";
             this.transactionHistoryTab.Size = new System.Drawing.Size(1042, 463);
@@ -152,13 +149,13 @@
             this.transactionHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.transactionHistory.FullRowSelect = true;
             this.transactionHistory.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.transactionHistory.Location = new System.Drawing.Point(0, 22);
+            this.transactionHistory.Location = new System.Drawing.Point(0, 0);
             this.transactionHistory.MouseLocation = new System.Drawing.Point(-1, -1);
             this.transactionHistory.MouseState = MaterialSkin.MouseState.OUT;
             this.transactionHistory.Name = "transactionHistory";
             this.transactionHistory.OwnerDraw = true;
             this.transactionHistory.Scrollable = false;
-            this.transactionHistory.Size = new System.Drawing.Size(1042, 342);
+            this.transactionHistory.Size = new System.Drawing.Size(1042, 414);
             this.transactionHistory.TabIndex = 7;
             this.transactionHistory.UseCompatibleStateImageBehavior = false;
             this.transactionHistory.View = System.Windows.Forms.View.Details;
@@ -207,23 +204,9 @@
             this.addTransactionBtn.UseVisualStyleBackColor = true;
             this.addTransactionBtn.Click += new System.EventHandler(this.addTransactionBtn_Click);
             // 
-            // materialLabel3
-            // 
-            this.materialLabel3.AutoSize = true;
-            this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel3.Location = new System.Drawing.Point(9, 0);
-            this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(139, 19);
-            this.materialLabel3.TabIndex = 4;
-            this.materialLabel3.Text = "Transaction history";
-            // 
             // schTransactionTab
             // 
             this.schTransactionTab.Controls.Add(this.materialRaisedButton2);
-            this.schTransactionTab.Controls.Add(this.materialLabel4);
             this.schTransactionTab.Controls.Add(this.transactionsScheduled);
             this.schTransactionTab.Location = new System.Drawing.Point(4, 22);
             this.schTransactionTab.Name = "schTransactionTab";
@@ -239,27 +222,14 @@
             this.materialRaisedButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.materialRaisedButton2.Depth = 0;
             this.materialRaisedButton2.Icon = null;
-            this.materialRaisedButton2.Location = new System.Drawing.Point(890, 420);
+            this.materialRaisedButton2.Location = new System.Drawing.Point(810, 420);
             this.materialRaisedButton2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialRaisedButton2.Name = "materialRaisedButton2";
             this.materialRaisedButton2.Primary = true;
-            this.materialRaisedButton2.Size = new System.Drawing.Size(145, 36);
+            this.materialRaisedButton2.Size = new System.Drawing.Size(225, 36);
             this.materialRaisedButton2.TabIndex = 5;
-            this.materialRaisedButton2.Text = "Add Transaction";
+            this.materialRaisedButton2.Text = "Add Scheduled Transaction";
             this.materialRaisedButton2.UseVisualStyleBackColor = true;
-            // 
-            // materialLabel4
-            // 
-            this.materialLabel4.AutoSize = true;
-            this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel4.Location = new System.Drawing.Point(9, 0);
-            this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(166, 19);
-            this.materialLabel4.TabIndex = 7;
-            this.materialLabel4.Text = "Scheduled transactions";
             // 
             // transactionsScheduled
             // 
@@ -268,31 +238,26 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.transactionsScheduled.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.transactionsScheduled.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader16,
             this.columnHeader11,
             this.columnHeader12,
+            this.columnHeader1,
             this.columnHeader13,
             this.columnHeader15});
             this.transactionsScheduled.Depth = 0;
             this.transactionsScheduled.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
             this.transactionsScheduled.FullRowSelect = true;
             this.transactionsScheduled.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.transactionsScheduled.Location = new System.Drawing.Point(0, 22);
+            this.transactionsScheduled.Location = new System.Drawing.Point(0, 0);
             this.transactionsScheduled.MouseLocation = new System.Drawing.Point(-1, -1);
             this.transactionsScheduled.MouseState = MaterialSkin.MouseState.OUT;
             this.transactionsScheduled.Name = "transactionsScheduled";
             this.transactionsScheduled.OwnerDraw = true;
             this.transactionsScheduled.Scrollable = false;
-            this.transactionsScheduled.Size = new System.Drawing.Size(1042, 392);
+            this.transactionsScheduled.Size = new System.Drawing.Size(1042, 414);
             this.transactionsScheduled.TabIndex = 6;
             this.transactionsScheduled.UseCompatibleStateImageBehavior = false;
             this.transactionsScheduled.View = System.Windows.Forms.View.Details;
-            this.transactionsScheduled.Resize += new System.EventHandler(this.materialListView3_Resize);
-            // 
-            // columnHeader16
-            // 
-            this.columnHeader16.Text = "Status";
-            this.columnHeader16.Width = 80;
+            this.transactionsScheduled.Resize += new System.EventHandler(this.transactionsScheduled_Resize);
             // 
             // columnHeader11
             // 
@@ -301,7 +266,7 @@
             // 
             // columnHeader12
             // 
-            this.columnHeader12.Text = "Date";
+            this.columnHeader12.Text = "Start Date";
             this.columnHeader12.Width = 100;
             // 
             // columnHeader13
@@ -371,7 +336,7 @@
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.transactionHistoryContextMenu.Name = "transactionHistoryContextMenu";
-            this.transactionHistoryContextMenu.Size = new System.Drawing.Size(181, 120);
+            this.transactionHistoryContextMenu.Size = new System.Drawing.Size(115, 98);
             // 
             // executeToolStripMenuItem
             // 
@@ -405,6 +370,10 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Repeat";
             // 
             // accountOverview
             // 
@@ -441,16 +410,13 @@
         private MaterialSkin.Controls.MaterialLabel expectedEndBalance;
         private MaterialSkin.Controls.MaterialLabel currentBalance;
         private MaterialSkin.Controls.MaterialLabel expectedEndBalanceLabel;
-        private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialRaisedButton addTransactionBtn;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButton2;
-        private MaterialSkin.Controls.MaterialLabel materialLabel4;
         private MaterialSkin.Controls.MaterialListView transactionsScheduled;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
         private MaterialSkin.Controls.MaterialListView transactionHistory;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
@@ -465,5 +431,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem skipToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

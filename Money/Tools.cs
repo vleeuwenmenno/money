@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Money
 {
@@ -54,6 +57,41 @@ namespace Money
                 case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
                 default: return input.First().ToString().ToUpper() + input.Substring(1);
             }
+        }
+
+        public static decimal ExchangeRate(string currency)
+        {
+            string url = "http://finance.yahoo.com/webservice/" + "v1/symbols/allcurrencies/quote?format=xml";
+            try
+            {
+                // Load the data.
+                XmlDocument doc = new XmlDocument();
+                doc.Load(url);
+
+                // Process the resource nodes.
+                XmlNode root = doc.DocumentElement;
+                string xquery = "descendant::resource[@classname='Quote']";
+                foreach (XmlNode node in root.SelectNodes(xquery))
+                {
+                    const string name_query =
+                        "descendant::field[@name='name']";
+                    const string price_query =
+                        "descendant::field[@name='price']";
+
+                    string name =
+                        node.SelectSingleNode(name_query).InnerText;
+                    string price =
+                        node.SelectSingleNode(price_query).InnerText;
+                    decimal inverse = 1m / decimal.Parse(price);
+
+                    if (name == "USD/" + currency)
+                        return inverse;
+                }
+            }
+            catch (Exception ex)
+            { }
+
+            return 0.0m;
         }
 
         // Array of CardTypeInfo objects.
