@@ -1,193 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0EC5D955-8799-43AF-9FA8-E105E81C043D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MoneyUI</RootNamespace>
-    <AssemblyName>MoneyUI</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WebDav.Client, Version=2.2.1.0, Culture=neutral, PublicKeyToken=daed9acc7deb9472, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebDav.Client.2.2.1\lib\net45\WebDav.Client.dll</HintPath>
-    </Reference>
+    <None Remove="**\*.glade" />
+    <EmbeddedResource Include="**\*.glade">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="accountOverview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="accountOverview.Designer.cs">
-      <DependentUpon>accountOverview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="addTransaction.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="addTransaction.Designer.cs">
-      <DependentUpon>addTransaction.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ComboBoxItem.cs" />
-    <Compile Include="ComboCollection.cs" />
-    <Compile Include="databaseOverview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="databaseOverview.Designer.cs">
-      <DependentUpon>databaseOverview.cs</DependentUpon>
-    </Compile>
-    <Compile Include="databaseSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="databaseSettings.Designer.cs">
-      <DependentUpon>databaseSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ImagedComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="newAccount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="newAccount.Designer.cs">
-      <DependentUpon>newAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="payeeSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="payeeSelector.Designer.cs">
-      <DependentUpon>payeeSelector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="startup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="startup.Designer.cs">
-      <DependentUpon>startup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="accountOverview.resx">
-      <DependentUpon>accountOverview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="addTransaction.resx">
-      <DependentUpon>addTransaction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="databaseOverview.resx">
-      <DependentUpon>databaseOverview.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="databaseSettings.resx">
-      <DependentUpon>databaseSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="newAccount.resx">
-      <DependentUpon>newAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="payeeSelector.resx">
-      <DependentUpon>payeeSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="startup.resx">
-      <DependentUpon>startup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <PackageReference Include="GtkSharp" Version="3.22.24.*" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="App.config" />
+    <ProjectReference Include="..\MoneyM\MoneyM.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Money\Money.csproj">
-      <Project>{182340ac-2fda-45a5-abd9-bbdcd883b550}</Project>
-      <Name>Money</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="icons\amex.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\cash.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\dinersclub.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\discover.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\enroute.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\jcb.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\maestro.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\mastercard.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\paypal.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\savings.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="icons\visa.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

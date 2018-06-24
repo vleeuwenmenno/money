@@ -15,7 +15,6 @@ namespace Money
         public List<string> payees { get; set; }
 
         public bool syncWebDav { get; set; }
-        public bool darkTheme { get; set; }
 
         public string webDavHost { get; set; }
         public string webDavUsername { get; set; }
@@ -54,8 +53,7 @@ namespace Money
             this.webDavHost = db.webDavHost;
             this.webDavUsername = db.webDavUsername;
             this.webDavPass = db.webDavPass;
-
-            this.darkTheme = db.darkTheme;
+            
             this.payees = db.payees;
             this.modDateTime = db.modDateTime;
 

@@ -1,33 +1,23 @@
-﻿using Money;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Gtk;
 
-namespace MoneyUI
+namespace MoneyUUI
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            if (args.Length > 0)
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new databaseOverview(new Database(string.Join(" ", args)), string.Join("", args)));
-            }
-            else
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new startup());
-            }
+            Application.Init();
+
+            var app = new Application("org.MoneyUUI.MoneyUUI", GLib.ApplicationFlags.None);
+            app.Register(GLib.Cancellable.Current);
+
+            var win = new MainWindow();
+            app.AddWindow(win);
+
+            win.Show();
+            Application.Run();
         }
     }
 }

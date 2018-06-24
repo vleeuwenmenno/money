@@ -137,7 +137,10 @@ namespace Money
                     decimal inverse = 1m / decimal.Parse(price);
 
                     if (name.StartsWith("USD/"))
-                        db.Add(name.Replace("USD/", ""), decimal.Parse(price));
+                        if (!db.ContainsKey(name.Replace("USD/", "")))
+                        {
+                            db.Add(name.Replace("USD/", ""), decimal.Parse(price));
+                        }
                 }
             }
             catch (Exception ex)
