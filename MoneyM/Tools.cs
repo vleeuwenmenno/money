@@ -96,7 +96,6 @@ namespace Money
 
         public static decimal ConvertCurrency(Dictionary<string, decimal> snapshot, string from, string to, decimal value)
         {
-            //EURO > USD > THB
             if (from == "USD")
             {
                 decimal valueUsd = snapshot[to] * value;

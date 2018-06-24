@@ -13,7 +13,7 @@ namespace MoneyUUI
             var app = new Application("org.MoneyUUI.MoneyUUI", GLib.ApplicationFlags.None);
             app.Register(GLib.Cancellable.Current);
 
-            var win = new MainWindow();
+            var win = new StartupWindow();
             app.AddWindow(win);
 
             win.Show();
