@@ -24,7 +24,7 @@ namespace MoneyUUI
         [UI] private ListStore recentDbListStore = null;
 
         public StartupWindow() : this(new Builder("StartupWindow.glade")) 
-        { }
+        { this.SetPosition(WindowPosition.Center); }
 
         private StartupWindow(Builder builder) : base(builder.GetObject("StartupWindow").Handle)
         {

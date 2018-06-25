@@ -20,20 +20,28 @@ namespace MoneyUUI
 
         public DateTime monthToDisplay = DateTime.Now;
 
-        //TODO: public accountOverview ao;
+        public bool updateUi = false;
+
+        private AccountOverviewWindow aow;
 
         [UI] private TreeView accountList = null;
         [UI] private ListStore accountListStore = null;
 
-        [UI] private Button monthBackwardBtn = null;
-        [UI] private Button monthForwardBtn = null;
         [UI] private Button addAccountBtn = null;
         [UI] private Button syncBtn = null;
         [UI] private Button settingsBtn = null;
+        [UI] private Button monthBackwardPopOverBtn = null;
+        [UI] private Button monthForwardPopOverBtn = null;
 
-        [UI] private Label currentMonthLabel = null;
+        [UI] private Label currentDatePopOverLabel = null;
+
+        [UI] private Button currentMonthLabel = null;
 
         [UI] private ProgressBar syncProgressBar = null;
+
+        [UI] private PopoverMenu datePickerPopOver = null;
+
+        [UI] private Box datePickerBox = null;
 
         public DatabaseOverviewWindow(Database db, string dbPath) : this(new Builder("DatabaseOverviewWindow.glade")) 
         { 
@@ -44,6 +52,21 @@ namespace MoneyUUI
                 syncBtn.Visible = true;
 
             UpdateUI();
+
+            System.Timers.Timer uiUpdateCheck = new System.Timers.Timer(200);
+            uiUpdateCheck.Elapsed += (delegate {
+                if (updateUi)
+                {
+                    updateUi = false;
+                    UpdateUI();
+                }
+            });
+            uiUpdateCheck.Start();
+
+            aow = new AccountOverviewWindow(db, dbPath, 0, this);
+            aow.Show();
+
+            this.SetPosition(WindowPosition.Center);
         }
 
         private DatabaseOverviewWindow(Builder builder) : base(builder.GetObject("DatabaseOverviewWindow").Handle)
@@ -52,36 +75,133 @@ namespace MoneyUUI
 
             DeleteEvent += Window_DeleteEvent;
 
-            monthBackwardBtn.Clicked += monthBackwardBtn_Clicked;
-            monthForwardBtn.Clicked += monthForwardBtn_Clicked;
             settingsBtn.Clicked += settingsBtn_Clicked;
             syncBtn.Clicked += syncBtn_Clicked;
             addAccountBtn.Clicked += addAccountBtn_Clicked;
             accountList.ButtonPressEvent += new ButtonPressEventHandler(accountList_ButtonPress);
+            currentMonthLabel.Clicked += CurrentMonthLabel_Clicked;
+            monthForwardPopOverBtn.Clicked += MonthForwardPopOverBtn_Clicked;
+            monthBackwardPopOverBtn.Clicked += MonthBackwardPopOverBtn_Clicked;
 
             PrepareTreeView();
             this.Resize(300, 500);
             accountListStore.AppendValues("", "");
         }
 
-         [GLib.ConnectBeforeAttribute]
+        private void MonthBackwardPopOverBtn_Clicked(object sender, EventArgs e)
+        {
+            monthToDisplay = monthToDisplay.AddMonths(-1);
+            DateTime t = monthToDisplay;
+            DateTime l = new DateTime(t.Year, t.Month, 1);
+
+            updateUi = true;
+            aow.updateUi = true;
+            currentDatePopOverLabel.Text = monthToDisplay.ToString("dd MMM yyyy");
+
+            UpdatePopOver(l);
+        }
+
+        private void MonthForwardPopOverBtn_Clicked(object sender, EventArgs e)
+        {
+            monthToDisplay = monthToDisplay.AddMonths(1);
+            DateTime t = monthToDisplay;
+            DateTime l = new DateTime(t.Year, t.Month, 1);
+
+            updateUi = true;
+            aow.updateUi = true;
+            currentDatePopOverLabel.Text = monthToDisplay.ToString("dd MMM yyyy");
+
+            UpdatePopOver(l);
+        }
+
+        private void CurrentMonthLabel_Clicked(object sender, EventArgs e)
+        {
+            DateTime t = monthToDisplay;
+            DateTime l = new DateTime(t.Year, t.Month, 1);
+
+            currentDatePopOverLabel.Text = monthToDisplay.ToString("dd MMM yyyy");
+
+            datePickerBox.SetSizeRequest(128, 128);
+            UpdatePopOver(l);
+
+            datePickerPopOver.ShowAll();
+            datePickerPopOver.Popup();
+        }
+
+        private void UpdatePopOver(DateTime l)
+        {
+            while (true)
+            {
+                if (l.DayOfWeek != DayOfWeek.Monday)
+                    l = l.AddDays(-1);
+                else
+                    break;
+            }
+
+            foreach (Widget w in datePickerBox.AllChildren)
+                w.Destroy();
+
+            for (int r = 0; r < 6; r++)
+            {
+                Box b = new Box(Orientation.Horizontal, 0);
+                b.Expand = true;
+                for (int c = 0; c < 7; c++)
+                {
+                    Button button = new Button();
+                    button.Label = l.Day.ToString();
+
+                    if (new DateTime(l.Year, l.Month, 1) != new DateTime(monthToDisplay.Year, monthToDisplay.Month, 1))
+                        button.Sensitive = false;
+
+                    button.Clicked += (delegate (object o, EventArgs ee) {
+                        monthToDisplay = new DateTime(monthToDisplay.Year, monthToDisplay.Month, int.Parse(((Button)o).Label));
+                        currentDatePopOverLabel.Text = monthToDisplay.ToString("dd MMM yyyy");
+                    });
+
+                    b.Add(button);
+                    l = l.AddDays(1);
+                }
+
+                datePickerBox.Add(b);
+            }
+
+            datePickerPopOver.ShowAll();
+            datePickerPopOver.Popup();
+        }
+
+        [GLib.ConnectBeforeAttribute]
         private void accountList_ButtonPress(object o, ButtonPressEventArgs e)
         {
             if (e.Event.Button == 3)
             {
                 Menu m = new Menu();
-                MenuItem deleteItem = new MenuItem("Edit");
-                deleteItem.ButtonPressEvent += new ButtonPressEventHandler(accountList_EditBtnPress);
-                m.Add(deleteItem);
+
+                MenuItem openItem = new MenuItem("Open");
+                openItem.ButtonPressEvent += new ButtonPressEventHandler(delegate (object oo, ButtonPressEventArgs args) {
+                    Gtk.TreeIter selected;
+                    if (accountList.Selection.GetSelected(out selected))
+                    {
+                        int account = (int)accountListStore.GetValue(selected, 2);
+                        aow.ac = account;
+                        aow.updateUi = true;
+                    }
+                });
+
+                MenuItem editItem = new MenuItem("Edit");
+                editItem.ButtonPressEvent += new ButtonPressEventHandler(accountList_EditBtnPress);
+
+                m.Add(openItem);
+                m.Add(editItem);
                 m.ShowAll();
                 m.Popup();
             }
-            else if(((Gdk.EventButton)e.Event).Type == Gdk.EventType.ButtonPress)
+            else if(((Gdk.EventButton)e.Event).Type == Gdk.EventType.DoubleButtonPress)
             {
                 Gtk.TreeIter selected;
                 if (accountList.Selection.GetSelected(out selected)) {
                     int account = (int)accountListStore.GetValue(selected, 2);
-                    
+                    aow.ac = account;
+                    aow.updateUi = true;
                 }
             }
         }
@@ -96,22 +216,9 @@ namespace MoneyUUI
             }
         }
 
-        private void addAccountBtn_Clicked(object sender, EventArgs e)
-        {
-            AccountSettingsWindow asw = new AccountSettingsWindow(db, dbPath, 0, this);
-            asw.Show();
-        }
-
-        private void syncBtn_Clicked(object sender, EventArgs e)
-        {
-            runSync();
-        }
-
         public void runSync()
         {
             syncProgressBar.Visible = true;
-            syncProgressBar.PulseStep = 0.1;
-            syncProgressBar.Pulse();
 
             IWebDavClient _client = new WebDavClient();
             var clientParams = new WebDavClientParams
@@ -123,17 +230,15 @@ namespace MoneyUUI
 
             Thread t = new Thread(async () => {
 
-                Gtk.Application.Invoke(delegate {
+                System.Timers.Timer ti = new System.Timers.Timer(200);
+                ti.Elapsed += (delegate {
                     syncProgressBar.Pulse();
                 });
+                ti.Start();
 
                 var result = await _client.Propfind(db.webDavHost + "/Money");
                 if (result.IsSuccessful)
                 {
-                    Gtk.Application.Invoke(delegate {
-                        syncProgressBar.Pulse();
-                    });
-
                     bool containsDb = false;
                     foreach (var res in result.Resources)
                     {
@@ -146,10 +251,6 @@ namespace MoneyUUI
 
                     if (containsDb)
                     {
-                        Gtk.Application.Invoke(delegate {
-                            syncProgressBar.Pulse();
-                        });
-
                         //Let's grab the online version
                         var resultInner = await _client.GetRawFile(db.webDavHost + "/Money/database.mdb");
 
@@ -173,10 +274,6 @@ namespace MoneyUUI
                             else
                             //Else upload local to online
                             {
-                                Gtk.Application.Invoke(delegate {
-                                    syncProgressBar.Pulse();
-                                });
-
                                 //First delete the online version
                                 var resultInnerInner = await _client.Delete(db.webDavHost + "/Money/database.mdb");
 
@@ -205,10 +302,6 @@ namespace MoneyUUI
                     }
                     else
                     {
-                        Gtk.Application.Invoke(delegate {
-                            syncProgressBar.Pulse();
-                        });
-
                         var resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
 
                         if (!resultInner.IsSuccessful)
@@ -227,20 +320,12 @@ namespace MoneyUUI
                 }
                 else if (result.StatusCode == 404)
                 {
-                    Gtk.Application.Invoke(delegate {
-                        syncProgressBar.Pulse();
-                    });
-
                     var resultInner = await _client.Mkcol("Money");
 
                     if (resultInner.IsSuccessful)
                     {
                         resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
-
-                        Gtk.Application.Invoke(delegate {
-                            syncProgressBar.Pulse();
-                        });
-
+                        
                         if (!resultInner.IsSuccessful)
                         {
                             Gtk.Application.Invoke(delegate {
@@ -268,8 +353,9 @@ namespace MoneyUUI
                     });
                 }
 
+                ti.Stop();
+
                 Gtk.Application.Invoke(delegate {
-                    syncProgressBar.Pulse();
                     syncProgressBar.Visible = false;
                 });
             });
@@ -306,7 +392,7 @@ namespace MoneyUUI
         public void UpdateUI()
         {
             //Update month selector label
-            currentMonthLabel.Text = monthToDisplay.ToString("MMMM yyyy");
+            currentMonthLabel.Label = monthToDisplay.ToString("MMMM yyyy");
 
             //Set the database name as the window title
             this.Title = db.name;
@@ -325,7 +411,7 @@ namespace MoneyUUI
                 else
                     s += (ac.accountNumber);
 
-                this.accountListStore.AppendValues(s, ac.currencyISO4217 + " " + String.Format("{0:n}", ac.currentBalance), i);
+                this.accountListStore.AppendValues(s, ac.currencyISO4217 + " " + Convert.ToDecimal(ac.currentBalance).ToString("#,##0.00"), i);
             }
         }
 
@@ -337,16 +423,15 @@ namespace MoneyUUI
             swi.Show();
         }
 
-        private void monthForwardBtn_Clicked(object sender, EventArgs e)
+        private void addAccountBtn_Clicked(object sender, EventArgs e)
         {
-            monthToDisplay = monthToDisplay.AddMonths(1);
-            UpdateUI();
+            AccountSettingsWindow asw = new AccountSettingsWindow(db, dbPath, this);
+            asw.Show();
         }
 
-        private void monthBackwardBtn_Clicked(object sender, EventArgs e)
+        private void syncBtn_Clicked(object sender, EventArgs e)
         {
-            monthToDisplay = monthToDisplay.AddMonths(-1);
-            UpdateUI();
+            runSync();
         }
 
         #endregion

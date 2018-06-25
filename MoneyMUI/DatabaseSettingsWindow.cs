@@ -65,9 +65,6 @@ namespace MoneyUUI
             saveBtn.Sensitive = false;
             progressBar.Visible = true;
 
-            progressBar.PulseStep = 0.1;
-            progressBar.Pulse();
-
             IWebDavClient _client = new WebDavClient();
             var clientParams = new WebDavClientParams
             {
@@ -78,17 +75,15 @@ namespace MoneyUUI
 
             Thread t = new Thread(async () => {
 
-                Gtk.Application.Invoke(delegate {
+                System.Timers.Timer ti = new System.Timers.Timer(200);
+                ti.Elapsed += (delegate {
                     progressBar.Pulse();
                 });
+                ti.Start();
 
                 var result = await _client.Propfind(db.webDavHost + "/Money");
                 if (result.IsSuccessful)
                 {
-                    Gtk.Application.Invoke(delegate {
-                        progressBar.Pulse();
-                    });
-
                     bool containsDb = false;
                     foreach (var res in result.Resources)
                     {
@@ -101,10 +96,6 @@ namespace MoneyUUI
 
                     if (containsDb)
                     {
-                        Gtk.Application.Invoke(delegate {
-                            progressBar.Pulse();
-                        });
-
                         //Let's grab the online version
                         var resultInner = await _client.GetRawFile(db.webDavHost + "/Money/database.mdb");
 
@@ -126,10 +117,6 @@ namespace MoneyUUI
                         else
                         //Else upload local to online
                         {
-                            Gtk.Application.Invoke(delegate {
-                                progressBar.Pulse();
-                            });
-
                             //First delete the online version
                             var resultInnerInner = await _client.Delete(db.webDavHost + "/Money/database.mdb");
 
@@ -158,10 +145,6 @@ namespace MoneyUUI
                     }
                     else
                     {
-                        Gtk.Application.Invoke(delegate {
-                            progressBar.Pulse();
-                        });
-
                         var resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
 
                         if (!resultInner.IsSuccessful)
@@ -181,20 +164,12 @@ namespace MoneyUUI
                 }
                 else if (result.StatusCode == 404)
                 {
-                    Gtk.Application.Invoke(delegate {
-                        progressBar.Pulse();
-                    });
-
                     var resultInner = await _client.Mkcol("Money");
 
                     if (resultInner.IsSuccessful)
                     {
                         resultInner = await _client.PutFile(db.webDavHost + "/Money/database.mdb", File.OpenRead(dbPath));
-
-                        Gtk.Application.Invoke(delegate {
-                            progressBar.Pulse();
-                        });
-
+                        
                         if (!resultInner.IsSuccessful)
                         {
                             Gtk.Application.Invoke(delegate {
@@ -222,9 +197,10 @@ namespace MoneyUUI
                         new MessageDialog(this, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, false, "Sync error " + result.StatusCode + " (" + result.Description + ")").Show();
                     });
                 }
-                
+
+                ti.Stop();
+
                 Gtk.Application.Invoke(delegate {
-                    progressBar.Pulse();
                     progressBar.Visible = false;
                     saveBtn.Sensitive = true;
                 });
