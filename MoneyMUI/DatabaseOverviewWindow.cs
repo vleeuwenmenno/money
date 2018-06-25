@@ -84,7 +84,7 @@ namespace MoneyUUI
             monthBackwardPopOverBtn.Clicked += MonthBackwardPopOverBtn_Clicked;
 
             PrepareTreeView();
-            this.Resize(300, 500);
+            this.Resize(396, 512);
             accountListStore.AppendValues("", "");
         }
 
@@ -368,6 +368,7 @@ namespace MoneyUUI
             // Create a column
             Gtk.TreeViewColumn acName = new Gtk.TreeViewColumn ();
             acName.Title = "Account";
+            acName.Expand = true;
     
             // Create a column
             Gtk.TreeViewColumn acBalance = new Gtk.TreeViewColumn ();
