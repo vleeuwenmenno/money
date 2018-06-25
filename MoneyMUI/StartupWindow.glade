@@ -4,9 +4,9 @@
   <requires lib="gtk+" version="3.18"/>
   <object class="GtkListStore" id="recentDbListStore">
     <columns>
-      <!-- column-name Database name -->
+      <!-- column-name Database -->
       <column type="gchararray"/>
-      <!-- column-name File location -->
+      <!-- column-name File -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -15,7 +15,7 @@
     <property name="title" translatable="yes">MoneyM</property>
     <property name="default_width">480</property>
     <property name="default_height">240</property>
-    <property name="icon_name">accessories-calculator</property>
+    <property name="icon_name">accessories-dictionary</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

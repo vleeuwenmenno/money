@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using UI = Gtk.Builder.ObjectAttribute;
 
 namespace MoneyUUI
-{
+{    
     class StartupWindow : Window
     {
         public Database db;
@@ -35,6 +35,7 @@ namespace MoneyUUI
             exitBtn.Clicked += exitBtn_Clicked;
             browseBtn.Clicked += browseBtn_Clicked;
             addDatabaseBtn.Clicked += addDatabaseBtn_Clicked;
+            recentDbList.ButtonPressEvent += new ButtonPressEventHandler(recentDbList_ButtonPress);
 
             PrepareTreeView();
             this.Resize(640, 350);
@@ -49,6 +50,121 @@ namespace MoneyUUI
                 {
                     recentDbListStore.AppendValues(pair.Key, pair.Value);
                 }
+            }
+        }
+
+        [GLib.ConnectBeforeAttribute]
+        private void recentDbList_ButtonPress(object o, ButtonPressEventArgs e)
+        {
+            if (e.Event.Button == 3)
+            {
+                Menu m = new Menu();
+                MenuItem deleteItem = new MenuItem("Remove");
+                deleteItem.ButtonPressEvent += new ButtonPressEventHandler(OnDeleteItemButtonPressed);
+                m.Add(deleteItem);
+                m.ShowAll();
+                m.Popup();
+            }
+            else if(((Gdk.EventButton)e.Event).Type == Gdk.EventType.TwoButtonPress)
+            {
+                Gtk.TreeIter selected;
+                if (recentDbList.Selection.GetSelected(out selected)) {
+                    dbPath = (string)recentDbListStore.GetValue(selected, 1);
+                }
+
+                if (!File.Exists(dbPath))
+                {
+                    MessageDialog msdSame = new MessageDialog(this, DialogFlags.Modal, MessageType.Warning, ButtonsType.YesNo, false, "The selected database could not be found, delete it from recents?");
+                    ResponseType response = (ResponseType) msdSame.Run();
+                    if (response == ResponseType.Yes) 
+                    {
+                        msdSame.Destroy();
+                        history.Remove(new KeyValuePair<string, string>((string)recentDbListStore.GetValue(selected, 0), (string)recentDbListStore.GetValue(selected, 1)));
+                        File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json", JsonConvert.SerializeObject(history, Formatting.Indented));
+                    }
+                    else if (response == ResponseType.No || response == ResponseType.DeleteEvent)
+                    {
+                        msdSame.Destroy();
+                        return;
+                    }
+
+                    recentDbListStore.Clear();
+
+                    history = new List<KeyValuePair<string, string>>();
+
+                    if (File.Exists(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"))
+                    {
+                        history = JsonConvert.DeserializeObject<List<KeyValuePair<string, string>>>(File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"));
+
+                        foreach (KeyValuePair<string, string> pair in history)
+                        {
+                            recentDbListStore.AppendValues(pair.Key, pair.Value);
+                        }
+                    }
+
+                    return;
+                }
+
+                db = new Database(dbPath);
+
+                if (history.Contains(new KeyValuePair<string, string>(db.name, dbPath)))
+                {
+                    List<KeyValuePair<string, string>> historyCopy = new List<KeyValuePair<string, string>>(history);
+                    historyCopy = historyCopy.ToList();
+                    history = new List<KeyValuePair<string, string>>();
+
+                    history.Add(historyCopy[historyCopy.IndexOf(new KeyValuePair<string, string>(db.name, dbPath))]);
+                    historyCopy.Remove(new KeyValuePair<string, string>(db.name, dbPath));
+
+                    history.AddRange(historyCopy);
+                    File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json", JsonConvert.SerializeObject(history, Formatting.Indented));
+                }
+                else
+                {
+                    history.Add(new KeyValuePair<string, string>(db.name, dbPath));
+                    File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json", JsonConvert.SerializeObject(history, Formatting.Indented));
+                }
+
+                this.Hide();
+                DatabaseOverviewWindow dbo = new DatabaseOverviewWindow(db, dbPath);
+                dbo.Show();
+            }
+        }
+
+        private void OnDeleteItemButtonPressed (object sender, ButtonPressEventArgs e)
+        {
+            Gtk.TreeIter selected;
+            if (recentDbList.Selection.GetSelected(out selected)) 
+            {
+                MessageDialog msdSame = new MessageDialog(this, DialogFlags.Modal, MessageType.Warning, ButtonsType.YesNo, false, "Remove this database from history?");
+                ResponseType response = (ResponseType) msdSame.Run();
+                if (response == ResponseType.Yes) 
+                {
+                    msdSame.Destroy();
+                    history.Remove(new KeyValuePair<string, string>((string)recentDbListStore.GetValue(selected, 0), (string)recentDbListStore.GetValue(selected, 1)));
+                    File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json", JsonConvert.SerializeObject(history, Formatting.Indented));
+                }
+                else if (response == ResponseType.No || response == ResponseType.DeleteEvent)
+                {
+                    msdSame.Destroy();
+                    return;
+                }
+
+                recentDbListStore.Clear();
+
+                history = new List<KeyValuePair<string, string>>();
+
+                if (File.Exists(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"))
+                {
+                    history = JsonConvert.DeserializeObject<List<KeyValuePair<string, string>>>(File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/history.json"));
+
+                    foreach (KeyValuePair<string, string> pair in history)
+                    {
+                        recentDbListStore.AppendValues(pair.Key, pair.Value);
+                    }
+                }
+
+                return;
             }
         }
 

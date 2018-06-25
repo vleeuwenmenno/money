@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/MoneyUI/MoneyUI.csproj"
+                "${workspaceFolder}/MoneyMUI/MoneyMUI.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

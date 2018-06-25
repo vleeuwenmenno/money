@@ -8,6 +8,8 @@
       <column type="gchararray"/>
       <!-- column-name Balance -->
       <column type="gchararray"/>
+      <!-- column-name Account No -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkImage" id="monthBackwardBtnIcon">
@@ -27,6 +29,7 @@
   </object>
   <object class="GtkWindow" id="DatabaseOverviewWindow">
     <property name="can_focus">False</property>
+    <property name="icon_name">accessories-dictionary</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -99,6 +102,18 @@
           </packing>
         </child>
         <child>
+          <object class="GtkProgressBar" id="syncProgressBar">
+            <property name="can_focus">False</property>
+            <property name="text" translatable="yes">Syncing...</property>
+            <property name="show_text">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -132,7 +147,6 @@
             <child>
               <object class="GtkButton" id="syncBtn">
                 <property name="label" translatable="yes">Sync</property>
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image">syncBtnIcon</property>
