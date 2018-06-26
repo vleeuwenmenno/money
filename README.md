@@ -14,9 +14,16 @@ Aside from all required DLLs which are packaged with every release, you'll need 
 * .NET Core 2.0+
 * Gtk#
 
-### Installing
+### Running/Installing
 
-Unzip and run the exe.
+There is currently no installer but you can compile it yourself ;)
+
+```
+wget archive.zip https://git.stardebris.net/stardebris/money/repository/v0.1.0/archive.zip
+unzip archive.zip
+cd MoneyMUI/
+dotnet run
+```
 
 ## Contributing
 
