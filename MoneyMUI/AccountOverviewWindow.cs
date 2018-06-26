@@ -253,6 +253,7 @@ namespace MoneyUUI
                                     ac.RecalculateBalance();
 
                                 UpdateUI();
+                                parent.updateUi = true;
                                 db.Save(dbPath);
                                 return;
                             }
@@ -289,6 +290,7 @@ namespace MoneyUUI
                                     ac.RecalculateBalance();
 
                                 UpdateUI();
+                                parent.updateUi = true;
                                 db.Save(dbPath);
                                 return;
                             }
@@ -372,6 +374,7 @@ namespace MoneyUUI
                                         ac.RecalculateBalance();
 
                                     UpdateUI();
+                                    parent.updateUi = true;
                                     db.Save(dbPath);
                                     return;
                                 }
