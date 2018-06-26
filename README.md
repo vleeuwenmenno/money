@@ -10,8 +10,9 @@ I strongly advice to use a stable release if you plan to use this as your primar
 
 ### Prerequisites
 
-All required DLLs are in the release zip's
-The only thing you need is .NET Framework 4.0+
+Aside from all required DLLs which are packaged with every release, you'll need the following installed:
+* .NET Core 2.0+
+* Gtk#
 
 ### Installing
 
