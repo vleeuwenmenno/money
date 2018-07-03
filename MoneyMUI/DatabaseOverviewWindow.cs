@@ -67,6 +67,7 @@ namespace MoneyUUI
             aow.Show();
 
             this.SetPosition(WindowPosition.Center);
+            this.Move(Screen.GetMonitorGeometry(Screen.PrimaryMonitor).Right - (Screen.GetMonitorGeometry(Screen.PrimaryMonitor).Width / 2) - 396 * 2, y: 200);
         }
 
         private DatabaseOverviewWindow(Builder builder) : base(builder.GetObject("DatabaseOverviewWindow").Handle)
@@ -184,6 +185,12 @@ namespace MoneyUUI
                         int account = (int)accountListStore.GetValue(selected, 2);
                         aow.ac = account;
                         aow.updateUi = true;
+
+                        if (!aow.IsVisible)
+                        {
+                            aow = new AccountOverviewWindow(db, dbPath, account, this);
+                            aow.Show();
+                        }
                     }
                 });
 
@@ -202,6 +209,12 @@ namespace MoneyUUI
                     int account = (int)accountListStore.GetValue(selected, 2);
                     aow.ac = account;
                     aow.updateUi = true;
+
+                    if (!aow.IsVisible)
+                    {
+                        aow = new AccountOverviewWindow(db, dbPath, account, this);
+                        aow.Show();
+                    }
                 }
             }
         }

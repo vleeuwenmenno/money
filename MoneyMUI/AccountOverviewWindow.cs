@@ -59,6 +59,10 @@ namespace MoneyUUI
                 }
             });
             uiUpdateCheck.Start();
+
+
+            this.SetPosition(WindowPosition.Center);
+            this.Move(Screen.GetMonitorGeometry(Screen.PrimaryMonitor).Right - (Screen.GetMonitorGeometry(Screen.PrimaryMonitor).Width / 2) - 396 + 8, y: 200);
         }
 
         public void PrepareScheduledTransactionList()
@@ -208,6 +212,23 @@ namespace MoneyUUI
 
             DeleteEvent += Window_DeleteEvent;
             transactionList.ButtonPressEvent += new ButtonPressEventHandler(transactionList_ButtonPress);
+            addTransactionBtn.Clicked += AddTransactionBtn_Clicked;
+        }
+
+        private void AddTransactionBtn_Clicked(object sender, EventArgs e)
+        {
+            this.Sensitive = false;
+            parent.Sensitive = false;
+
+            AddTransactionWindow atw = new AddTransactionWindow(db, dbPath, ac);
+            atw.TransientFor = this;
+            atw.Run();
+
+            atw.Destroy();
+            atw = null;
+
+            this.Sensitive = true;
+            parent.Sensitive = true;
         }
 
         [GLib.ConnectBeforeAttribute]

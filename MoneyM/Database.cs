@@ -22,6 +22,8 @@ namespace Money
 
         public DateTime modDateTime { get; set; }
 
+        public List<Category> categories { get; set; }
+
         public int AccountIdFromName(string name)
         {
             int i = 0;
